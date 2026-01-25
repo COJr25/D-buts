@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Ring Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Google Fonts - On utilise Inter pour un look moderne -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!--
+    STRUCTURE PRINCIPALE
+    ====================
+    On utilise CSS Grid pour diviser la page en zones :
+    - Header (navigation du haut)
+    - Main (contenu principal avec 3 colonnes)
+    - Footer (navigation du bas)
+    -->
+    <div class="dashboard">
+
+        <!-- ========== HEADER ========== -->
+        <header class="header">
+            <!-- Logo à gauche -->
+            <div class="logo">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                    <!-- Forme du logo (simplifié) -->
+                    <path d="M10 20C10 14 14 10 20 10C26 10 30 14 30 20C30 26 26 30 20 30"
+                          stroke="white" stroke-width="3" stroke-linecap="round"/>
+                    <circle cx="20" cy="20" r="4" fill="white"/>
+                </svg>
+            </div>
+
+            <!-- Navigation centrale -->
+            <nav class="nav-main">
+                <a href="#" class="nav-link active">Overview</a>
+                <a href="#" class="nav-link">Apps</a>
+                <a href="#" class="nav-link">Store</a>
+            </nav>
+
+            <!-- Icônes à droite -->
+            <div class="header-actions">
+                <button class="icon-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"/>
+                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                    </svg>
+                </button>
+                <button class="icon-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="2" y1="12" x2="22" y2="12"/>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- ========== CONTENU PRINCIPAL ========== -->
+        <main class="main-content">
+
+            <!-- COLONNE GAUCHE : Sidebar + Cartes -->
+            <aside class="left-panel">
+
+                <!-- Mini sidebar avec icônes -->
+                <div class="sidebar-icons">
+                    <button class="sidebar-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6"/>
+                            <line x1="8" y1="2" x2="8" y2="6"/>
+                            <line x1="3" y1="10" x2="21" y2="10"/>
+                        </svg>
+                    </button>
+                    <button class="sidebar-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="20" x2="18" y2="10"/>
+                            <line x1="12" y1="20" x2="12" y2="4"/>
+                            <line x1="6" y1="20" x2="6" y2="14"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Cartes de données -->
+                <div class="cards-container">
+
+                    <!-- Carte Journal -->
+                    <div class="card card-journal">
+                        <div class="card-header">
+                            <span class="date">Monday, Jun 7</span>
+                            <span class="weather-icon">🌤️</span>
+                        </div>
+                        <h3 class="card-question">How will you make tomorrow meaningful?</h3>
+                        <div class="card-actions">
+                            <button class="btn btn-primary">
+                                <span>📝</span> New Entry
+                            </button>
+                            <button class="btn btn-secondary">
+                                <span>🔄</span> Try again
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Carte Running -->
+                    <div class="card card-running">
+                        <div class="card-header">
+                            <span class="activity-icon">🏃</span>
+                            <span class="activity-name">Running</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="activity-stats">
+                                <span class="label">Last Activity</span>
+                                <span class="value">3.5 <small>Km</small></span>
+                                <span class="update">Last update 2min ago</span>
+                            </div>
+                            <div class="mini-map">
+                                <!-- Représentation simplifiée de la carte -->
+                                <svg viewBox="0 0 80 60" class="map-svg">
+                                    <path d="M10 50 L30 30 L50 40 L70 20" stroke="white" stroke-width="2" fill="none"/>
+                                    <circle cx="70" cy="20" r="6" fill="#FF6B4A"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cartes Calories et Heart Rate (côte à côte) -->
+                    <div class="cards-row">
+                        <div class="card card-calories">
+                            <div class="card-header">
+                                <span>Calories</span>
+                                <span class="trend-up">📈</span>
+                            </div>
+                            <span class="value">2,054 <small>Kcal</small></span>
+                        </div>
+
+                        <div class="card card-heart">
+                            <div class="card-header">
+                                <span>Heart Rate</span>
+                                <span class="heart-icon">❤️</span>
+                            </div>
+                            <span class="value">94 <small>bpm</small></span>
+                            <svg class="heart-graph" viewBox="0 0 100 30">
+                                <path d="M0 15 L10 15 L15 5 L20 25 L25 10 L30 15 L100 15"
+                                      stroke="white" stroke-width="1.5" fill="none"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                </div>
+            </aside>
+
+            <!-- COLONNE CENTRALE : Ring 3D -->
+            <section class="center-panel">
+                <div class="ring-container">
+                    <!-- L'image de la ring sera ajoutée en CSS ou via img -->
+                    <div class="ring-glow"></div>
+
+                    <!-- SVG Placeholder de la Ring - À remplacer par ton image -->
+                    <svg class="ring-image" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Définition des dégradés -->
+                        <defs>
+                            <!-- Dégradé pour l'extérieur de la ring (gris) -->
+                            <linearGradient id="ringOuter" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#8B8B8B"/>
+                                <stop offset="50%" stop-color="#A5A5A5"/>
+                                <stop offset="100%" stop-color="#6B6B6B"/>
+                            </linearGradient>
+
+                            <!-- Dégradé pour l'intérieur (doré lumineux) -->
+                            <linearGradient id="ringInner" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#FFD700"/>
+                                <stop offset="30%" stop-color="#FFA500"/>
+                                <stop offset="70%" stop-color="#FF8C00"/>
+                                <stop offset="100%" stop-color="#FFD700"/>
+                            </linearGradient>
+
+                            <!-- Effet de glow -->
+                            <filter id="glow">
+                                <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                                <feMerge>
+                                    <feMergeNode in="coloredBlur"/>
+                                    <feMergeNode in="SourceGraphic"/>
+                                </feMerge>
+                            </filter>
+                        </defs>
+
+                        <!-- Ring - vue en perspective (ellipse inclinée) -->
+                        <g transform="translate(150, 150) rotate(-15)">
+                            <!-- Partie extérieure grise -->
+                            <ellipse cx="0" cy="0" rx="120" ry="100"
+                                     stroke="url(#ringOuter)" stroke-width="45" fill="none"/>
+
+                            <!-- Bordure intérieure dorée (lumineuse) -->
+                            <ellipse cx="0" cy="0" rx="98" ry="78"
+                                     stroke="url(#ringInner)" stroke-width="6" fill="none"
+                                     filter="url(#glow)"/>
+
+                            <!-- Reflet lumineux sur le bord -->
+                            <ellipse cx="-30" cy="-40" rx="30" ry="20"
+                                     fill="rgba(255,255,255,0.3)" transform="rotate(-30)"/>
+                        </g>
+                    </svg>
+
+                </div>
+            </section>
+
+            <!-- COLONNE DROITE : Profil et Stats -->
+            <aside class="right-panel">
+
+                <!-- Carte Profil -->
+                <div class="card card-profile">
+                    <div class="profile-image-container">
+                        <div class="profile-glow"></div>
+                        <img src="assets/profile.jpg" alt="User Profile" class="profile-image">
+                    </div>
+
+                    <div class="profile-stats">
+                        <div class="stat">
+                            <span class="stat-value">8.5 <small>kg</small></span>
+                            <span class="stat-label">Weight Loss</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">6.4K <small>kcl</small></span>
+                            <span class="stat-label">Calories Loss</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">3 <small>chat</small></span>
+                            <span class="stat-label">Challenges</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Carte Poids -->
+                <div class="card card-weight">
+                    <div class="weight-display">
+                        <span class="weight-value">76.5<small>kg</small></span>
+                        <span class="weight-label">Current Weight</span>
+                    </div>
+                    <div class="weight-chart">
+                        <!-- Graphique semi-circulaire -->
+                        <svg viewBox="0 0 120 60" class="gauge-svg">
+                            <path d="M10 55 A50 50 0 0 1 110 55" stroke="rgba(255,255,255,0.2)" stroke-width="8" fill="none" stroke-linecap="round"/>
+                            <path d="M10 55 A50 50 0 0 1 85 15" stroke="white" stroke-width="8" fill="none" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                </div>
+
+            </aside>
+
+        </main>
+
+        <!-- ========== FOOTER ========== -->
+        <footer class="footer">
+
+            <!-- Bouton Schedule à gauche -->
+            <button class="btn-schedule">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="4" width="18" height="18" rx="2"/>
+                    <line x1="16" y1="2" x2="16" y2="6"/>
+                    <line x1="8" y1="2" x2="8" y2="6"/>
+                    <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+                Schedule
+            </button>
+
+            <!-- Navigation centrale -->
+            <nav class="nav-footer">
+                <button class="nav-footer-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                </button>
+                <button class="nav-footer-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                </button>
+                <button class="nav-footer-btn active">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"/>
+                        <rect x="14" y="3" width="7" height="7"/>
+                        <rect x="14" y="14" width="7" height="7"/>
+                        <rect x="3" y="14" width="7" height="7"/>
+                    </svg>
+                </button>
+                <button class="nav-footer-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12.55a11 11 0 0 1 14.08 0"/>
+                        <path d="M1.42 9a16 16 0 0 1 21.16 0"/>
+                        <path d="M8.53 16.11a6 6 0 0 1 6.95 0"/>
+                        <circle cx="12" cy="20" r="1"/>
+                    </svg>
+                </button>
+                <button class="nav-footer-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18.36 6.64a9 9 0 1 1-12.73 0"/>
+                        <line x1="12" y1="2" x2="12" y2="12"/>
+                    </svg>
+                </button>
+            </nav>
+
+            <!-- Tabs à droite -->
+            <div class="footer-tabs">
+                <button class="tab active">Journey</button>
+                <button class="tab">Stats</button>
+                <button class="tab">Duels</button>
+            </div>
+
+        </footer>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

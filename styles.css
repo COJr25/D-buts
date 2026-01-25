@@ -1,0 +1,815 @@
+/*
+===============================================
+SMART RING DASHBOARD - STYLES
+===============================================
+
+TABLE DES MATIÈRES:
+1. Variables CSS (couleurs, tailles)
+2. Reset & Base
+3. Layout Principal (Grid)
+4. Header
+5. Cartes (Glassmorphism)
+6. Panel Gauche
+7. Zone Centrale (Ring)
+8. Panel Droite
+9. Footer
+10. Animations
+
+===============================================
+*/
+
+/* ============================================
+   1. VARIABLES CSS
+   ============================================
+   Les variables permettent de changer facilement
+   les couleurs et tailles dans tout le site.
+   On les définit dans :root (la racine du document)
+*/
+:root {
+    /* Couleurs principales */
+    --color-primary: #E8A87C;           /* Orange doré */
+    --color-secondary: #F5C7A9;          /* Pêche clair */
+    --color-accent: #C17850;             /* Orange foncé */
+
+    /* Couleurs de fond */
+    --bg-gradient-start: #2D1B4E;        /* Violet foncé */
+    --bg-gradient-middle: #8B6B8E;       /* Mauve */
+    --bg-gradient-end: #E8B4A0;          /* Pêche */
+
+    /* Couleurs de texte */
+    --text-primary: #FFFFFF;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --text-muted: rgba(255, 255, 255, 0.5);
+
+    /* Glassmorphism - L'effet verre dépoli */
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-shadow: rgba(0, 0, 0, 0.1);
+
+    /* Tailles */
+    --radius-sm: 12px;
+    --radius-md: 20px;
+    --radius-lg: 30px;
+    --radius-full: 50%;
+
+    /* Spacing */
+    --spacing-xs: 8px;
+    --spacing-sm: 12px;
+    --spacing-md: 20px;
+    --spacing-lg: 30px;
+
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+}
+
+/* ============================================
+   2. RESET & BASE
+   ============================================
+   On "remet à zéro" les styles par défaut
+   du navigateur pour partir sur une base propre
+*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;  /* La taille inclut padding et border */
+}
+
+html, body {
+    height: 100%;
+    overflow: hidden;  /* Pas de scroll, tout tient dans l'écran */
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text-primary);
+    background: linear-gradient(
+        135deg,
+        var(--bg-gradient-start) 0%,
+        var(--bg-gradient-middle) 50%,
+        var(--bg-gradient-end) 100%
+    );
+}
+
+/* ============================================
+   3. LAYOUT PRINCIPAL (CSS GRID)
+   ============================================
+   CSS Grid divise la page en zones nommées.
+   C'est comme un tableau Excel où on nomme les cellules.
+
+   Notre layout:
+   ┌─────────────────────────────┐
+   │          header             │
+   ├─────────────────────────────┤
+   │           main              │
+   ├─────────────────────────────┤
+   │          footer             │
+   └─────────────────────────────┘
+*/
+.dashboard {
+    display: grid;
+    grid-template-rows: auto 1fr auto;  /* header: auto, main: flexible, footer: auto */
+    grid-template-areas:
+        "header"
+        "main"
+        "footer";
+    height: 100vh;  /* 100% de la hauteur de l'écran */
+    width: 100vw;   /* 100% de la largeur de l'écran */
+    padding: var(--spacing-md);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Image de fond (les nuages) - Version CSS pure */
+.dashboard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* Fond dégradé principal */
+    background:
+        linear-gradient(
+            135deg,
+            #1a0a2e 0%,
+            #4a2c5a 20%,
+            #8b6b8e 40%,
+            #d4a5a5 60%,
+            #f5c7a9 80%,
+            #e8b4a0 100%
+        );
+    z-index: -2;
+}
+
+/* Effet nuages avec pseudo-élément */
+.dashboard::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        /* Nuages simulés avec gradients radiaux */
+        radial-gradient(ellipse 80% 50% at 20% 90%, rgba(255, 200, 180, 0.5) 0%, transparent 50%),
+        radial-gradient(ellipse 60% 40% at 80% 85%, rgba(255, 180, 160, 0.4) 0%, transparent 50%),
+        radial-gradient(ellipse 100% 60% at 50% 100%, rgba(255, 220, 200, 0.6) 0%, transparent 40%),
+        radial-gradient(ellipse 50% 30% at 30% 75%, rgba(255, 190, 170, 0.3) 0%, transparent 50%),
+        radial-gradient(ellipse 70% 35% at 70% 80%, rgba(255, 200, 180, 0.4) 0%, transparent 50%),
+        radial-gradient(ellipse 40% 25% at 10% 70%, rgba(255, 210, 190, 0.3) 0%, transparent 50%),
+        radial-gradient(ellipse 45% 25% at 90% 70%, rgba(255, 180, 160, 0.35) 0%, transparent 50%);
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* ============================================
+   4. HEADER
+   ============================================
+   Flexbox aligne les éléments horizontalement
+   justify-content: space-between met de l'espace entre eux
+*/
+.header {
+    grid-area: header;
+    display: flex;
+    justify-content: space-between;  /* Espace entre logo, nav et actions */
+    align-items: center;
+    padding: var(--spacing-sm) var(--spacing-md);
+}
+
+/* Logo */
+.logo {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Navigation principale */
+.nav-main {
+    display: flex;
+    gap: var(--spacing-xs);
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);  /* EFFET VERRE DÉPOLI ! */
+    -webkit-backdrop-filter: blur(20px);  /* Pour Safari */
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xs);
+}
+
+.nav-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-md);
+    transition: var(--transition-normal);
+    font-weight: 500;
+}
+
+/* État actif et hover */
+.nav-link:hover {
+    color: var(--text-primary);
+}
+
+.nav-link.active {
+    background: var(--glass-bg);
+    color: var(--text-primary);
+}
+
+/* Boutons d'action header */
+.header-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.icon-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-md);
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-normal);
+}
+
+.icon-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+/* ============================================
+   5. MAIN CONTENT
+   ============================================
+   Le contenu principal utilise aussi Grid
+   avec 3 colonnes : gauche, centre, droite
+*/
+.main-content {
+    grid-area: main;
+    display: grid;
+    grid-template-columns: 300px 1fr 300px;  /* Gauche: 300px, Centre: flexible, Droite: 300px */
+    gap: var(--spacing-lg);
+    padding: var(--spacing-md) 0;
+    overflow: hidden;
+}
+
+/* ============================================
+   6. PANEL GAUCHE
+   ============================================
+*/
+.left-panel {
+    display: flex;
+    gap: var(--spacing-md);
+}
+
+/* Sidebar avec icônes */
+.sidebar-icons {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.sidebar-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-md);
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-normal);
+}
+
+.sidebar-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--text-primary);
+}
+
+/* Container des cartes */
+.cards-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    flex: 1;
+}
+
+/* ============================================
+   7. CARTES (GLASSMORPHISM)
+   ============================================
+   Le glassmorphism combine:
+   - Fond semi-transparent
+   - backdrop-filter: blur() pour le flou
+   - Bordure légère
+   - Ombre subtile
+*/
+.card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    transition: var(--transition-normal);
+}
+
+.card:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 40px var(--glass-shadow);
+}
+
+/* Carte Journal */
+.card-journal .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-sm);
+}
+
+.card-journal .date {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.card-journal .card-question {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: var(--spacing-md);
+    line-height: 1.4;
+}
+
+.card-actions {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+/* Boutons */
+.btn {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-sm);
+    border: none;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    transition: var(--transition-normal);
+}
+
+.btn-primary {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--text-primary);
+}
+
+.btn-primary:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--glass-border);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+}
+
+/* Carte Running */
+.card-running .card-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-sm);
+}
+
+.card-running .activity-name {
+    font-weight: 600;
+}
+
+.card-running .card-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.activity-stats {
+    display: flex;
+    flex-direction: column;
+}
+
+.activity-stats .label {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.activity-stats .value {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.activity-stats .value small {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.activity-stats .update {
+    font-size: 10px;
+    color: var(--text-muted);
+}
+
+.mini-map {
+    width: 80px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+}
+
+.map-svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Ligne de cartes (Calories + Heart Rate) */
+.cards-row {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.cards-row .card {
+    flex: 1;
+}
+
+.card-calories .card-header,
+.card-heart .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xs);
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.card-calories .value,
+.card-heart .value {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.card-calories .value small,
+.card-heart .value small {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text-secondary);
+}
+
+.heart-graph {
+    width: 100%;
+    height: 20px;
+    margin-top: var(--spacing-xs);
+}
+
+/* ============================================
+   8. ZONE CENTRALE (RING)
+   ============================================
+*/
+.center-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.ring-container {
+    position: relative;
+    width: 400px;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Effet de lueur autour de la ring */
+.ring-glow {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(
+        circle,
+        rgba(232, 168, 124, 0.4) 0%,
+        rgba(232, 168, 124, 0) 70%
+    );
+    border-radius: 50%;
+    filter: blur(30px);
+    animation: pulse 3s ease-in-out infinite;
+}
+
+.ring-image {
+    width: 350px;
+    height: 350px;
+    position: relative;
+    z-index: 1;
+    /* Ombre portée pour l'effet 3D */
+    filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3));
+    /* Transition fluide pour les animations JS */
+    transition: transform 0.1s ease-out;
+}
+
+/* Animation flottante subtile pour la ring */
+.ring-container {
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+/* Animation de pulsation */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.6;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+}
+
+/* ============================================
+   9. PANEL DROITE
+   ============================================
+*/
+.right-panel {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+/* Carte Profil */
+.card-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--spacing-lg);
+}
+
+.profile-image-container {
+    position: relative;
+    margin-bottom: var(--spacing-md);
+}
+
+.profile-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 180px;
+    height: 180px;
+    background: conic-gradient(
+        from 0deg,
+        var(--color-primary),
+        var(--color-secondary),
+        var(--color-accent),
+        var(--color-primary)
+    );
+    border-radius: 50%;
+    filter: blur(15px);
+    opacity: 0.6;
+    animation: rotate-glow 4s linear infinite;
+}
+
+@keyframes rotate-glow {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+.profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    position: relative;
+    z-index: 1;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+}
+
+.profile-stats {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    text-align: center;
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-value {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.stat-value small {
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--text-secondary);
+}
+
+.stat-label {
+    font-size: 10px;
+    color: var(--text-muted);
+}
+
+/* Carte Poids */
+.card-weight {
+    text-align: center;
+    padding: var(--spacing-lg);
+}
+
+.weight-display {
+    margin-bottom: var(--spacing-md);
+}
+
+.weight-value {
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.weight-value small {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.weight-label {
+    display: block;
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.weight-chart {
+    display: flex;
+    justify-content: center;
+}
+
+.gauge-svg {
+    width: 120px;
+    height: 60px;
+}
+
+/* ============================================
+   10. FOOTER
+   ============================================
+*/
+.footer {
+    grid-area: footer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm) var(--spacing-md);
+}
+
+/* Bouton Schedule */
+.btn-schedule {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    color: var(--text-primary);
+    font-size: 13px;
+    cursor: pointer;
+    transition: var(--transition-normal);
+}
+
+.btn-schedule:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Navigation footer */
+.nav-footer {
+    display: flex;
+    gap: var(--spacing-xs);
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xs);
+}
+
+.nav-footer-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: var(--radius-md);
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-normal);
+}
+
+.nav-footer-btn:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-footer-btn.active {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    color: white;
+    border-radius: var(--radius-full);
+}
+
+/* Tabs footer */
+.footer-tabs {
+    display: flex;
+    gap: var(--spacing-xs);
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xs);
+}
+
+.tab {
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition-normal);
+}
+
+.tab:hover {
+    color: var(--text-primary);
+}
+
+.tab.active {
+    background: rgba(255, 255, 255, 0.15);
+    color: var(--text-primary);
+}
+
+/* ============================================
+   11. RESPONSIVE (pour écrans plus petits)
+   ============================================
+   Media queries adaptent le layout selon la taille d'écran
+*/
+@media (max-width: 1200px) {
+    .main-content {
+        grid-template-columns: 250px 1fr 250px;
+    }
+}
+
+@media (max-width: 900px) {
+    .main-content {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr auto;
+    }
+
+    .left-panel,
+    .right-panel {
+        display: none;  /* On cache les panels latéraux sur mobile */
+    }
+}

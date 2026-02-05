@@ -210,11 +210,18 @@ body {
     height: calc(100% - 2 * var(--spacing-xs));
     background: rgba(255, 255, 255, 0.18);
     border-radius: var(--radius-md);
+    /*
+       0.6s = assez lent pour VOIR le glissement
+       cubic-bezier(0.22, 0.68, 0, 1.2) :
+       - Le "1.2" fait dépasser légèrement la cible puis revenir
+       - Ça crée un micro-rebond naturel
+       - Essaie de changer le 1.2 en 1.0 pour voir la différence
+    */
     transition:
-        left 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
-        width 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        left 0.6s cubic-bezier(0.22, 0.68, 0, 1.2),
+        width 0.5s cubic-bezier(0.22, 0.68, 0, 1.2);
     z-index: 0;
-    pointer-events: none;  /* Le slider ne bloque pas les clics */
+    pointer-events: none;
 }
 
 .nav-link {
@@ -833,8 +840,8 @@ body {
     background: rgba(255, 255, 255, 0.2);
     border-radius: var(--radius-md);
     transition:
-        left 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
-        width 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        left 0.6s cubic-bezier(0.22, 0.68, 0, 1.2),
+        width 0.5s cubic-bezier(0.22, 0.68, 0, 1.2);
     z-index: 0;
     pointer-events: none;
 }

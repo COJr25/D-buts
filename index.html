@@ -157,51 +157,8 @@
                     <!-- L'image de la ring sera ajoutée en CSS ou via img -->
                     <div class="ring-glow"></div>
 
-                    <!-- SVG Placeholder de la Ring - À remplacer par ton image -->
-                    <svg class="ring-image" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Définition des dégradés -->
-                        <defs>
-                            <!-- Dégradé pour l'extérieur de la ring (gris) -->
-                            <linearGradient id="ringOuter" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#8B8B8B"/>
-                                <stop offset="50%" stop-color="#A5A5A5"/>
-                                <stop offset="100%" stop-color="#6B6B6B"/>
-                            </linearGradient>
-
-                            <!-- Dégradé pour l'intérieur (doré lumineux) -->
-                            <linearGradient id="ringInner" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#FFD700"/>
-                                <stop offset="30%" stop-color="#FFA500"/>
-                                <stop offset="70%" stop-color="#FF8C00"/>
-                                <stop offset="100%" stop-color="#FFD700"/>
-                            </linearGradient>
-
-                            <!-- Effet de glow -->
-                            <filter id="glow">
-                                <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
-                                <feMerge>
-                                    <feMergeNode in="coloredBlur"/>
-                                    <feMergeNode in="SourceGraphic"/>
-                                </feMerge>
-                            </filter>
-                        </defs>
-
-                        <!-- Ring - vue en perspective (ellipse inclinée) -->
-                        <g transform="translate(150, 150) rotate(-15)">
-                            <!-- Partie extérieure grise -->
-                            <ellipse cx="0" cy="0" rx="120" ry="100"
-                                     stroke="url(#ringOuter)" stroke-width="45" fill="none"/>
-
-                            <!-- Bordure intérieure dorée (lumineuse) -->
-                            <ellipse cx="0" cy="0" rx="98" ry="78"
-                                     stroke="url(#ringInner)" stroke-width="6" fill="none"
-                                     filter="url(#glow)"/>
-
-                            <!-- Reflet lumineux sur le bord -->
-                            <ellipse cx="-30" cy="-40" rx="30" ry="20"
-                                     fill="rgba(255,255,255,0.3)" transform="rotate(-30)"/>
-                        </g>
-                    </svg>
+                    <!-- Image de la Ring -->
+                    <img src="assets/ring.png" alt="Smart Ring" class="ring-image">
 
                 </div>
             </section>

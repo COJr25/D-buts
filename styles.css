@@ -122,7 +122,14 @@ body {
     overflow: hidden;
 }
 
-/* Image de fond (les nuages) - Version CSS pure */
+/* Image de fond (les nuages)
+   ============================
+   On utilise ta vraie image maintenant !
+   - url() → charge l'image depuis le chemin
+   - center → centre l'image sur l'écran
+   - / cover → l'image s'étire pour couvrir tout l'écran sans déformation
+   - no-repeat → l'image ne se répète pas
+*/
 .dashboard::before {
     content: '';
     position: absolute;
@@ -130,39 +137,8 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    /* Fond dégradé principal */
-    background:
-        linear-gradient(
-            135deg,
-            #1a0a2e 0%,
-            #4a2c5a 20%,
-            #8b6b8e 40%,
-            #d4a5a5 60%,
-            #f5c7a9 80%,
-            #e8b4a0 100%
-        );
-    z-index: -2;
-}
-
-/* Effet nuages avec pseudo-élément */
-.dashboard::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background:
-        /* Nuages simulés avec gradients radiaux */
-        radial-gradient(ellipse 80% 50% at 20% 90%, rgba(255, 200, 180, 0.5) 0%, transparent 50%),
-        radial-gradient(ellipse 60% 40% at 80% 85%, rgba(255, 180, 160, 0.4) 0%, transparent 50%),
-        radial-gradient(ellipse 100% 60% at 50% 100%, rgba(255, 220, 200, 0.6) 0%, transparent 40%),
-        radial-gradient(ellipse 50% 30% at 30% 75%, rgba(255, 190, 170, 0.3) 0%, transparent 50%),
-        radial-gradient(ellipse 70% 35% at 70% 80%, rgba(255, 200, 180, 0.4) 0%, transparent 50%),
-        radial-gradient(ellipse 40% 25% at 10% 70%, rgba(255, 210, 190, 0.3) 0%, transparent 50%),
-        radial-gradient(ellipse 45% 25% at 90% 70%, rgba(255, 180, 160, 0.35) 0%, transparent 50%);
+    background: url('assets/clouds-bg.png') center / cover no-repeat;
     z-index: -1;
-    pointer-events: none;
 }
 
 /* ============================================

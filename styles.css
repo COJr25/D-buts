@@ -63,9 +63,13 @@ TABLE DES MATIÈRES:
     --spacing-md: 20px;
     --spacing-lg: 30px;
 
-    /* Transitions */
-    --transition-fast: 0.2s ease;
-    --transition-normal: 0.9s ease;
+    /* Transitions
+       0.3s = durée (rapide mais visible)
+       cubic-bezier = courbe d'accélération personnalisée
+       → Démarre vite, ralentit à la fin = mouvement naturel
+    */
+    --transition-fast: 0.15s ease;
+    --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ============================================
@@ -174,18 +178,18 @@ body {
     height: 100%;
 }
 
-/* Navigation principale */
+/* Navigation principale - même style laiteux que les cartes */
 .nav-main {
     display: flex;
     gap: var(--spacing-xs);
-    background: linear-gradient(135deg, rgba(255, 220, 200, 0.12) 0%, rgba(255, 180, 160, 0.06) 100%);
-    backdrop-filter: blur(30px) saturate(1.2);
-    -webkit-backdrop-filter: blur(30px) saturate(1.2);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    border-top-color: rgba(255, 255, 255, 0.3);
+    background: linear-gradient(135deg, rgba(255, 210, 190, 0.3) 0%, rgba(255, 190, 170, 0.2) 100%);
+    backdrop-filter: blur(40px) saturate(1.4);
+    -webkit-backdrop-filter: blur(40px) saturate(1.4);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-top-color: rgba(255, 255, 255, 0.4);
     border-radius: var(--radius-lg);
     padding: var(--spacing-xs);
-    box-shadow: 0 8px 32px rgba(200, 120, 80, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px rgba(180, 100, 70, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }
 
 .nav-link {
@@ -193,17 +197,24 @@ body {
     text-decoration: none;
     padding: var(--spacing-sm) var(--spacing-md);
     border-radius: var(--radius-md);
-    transition: var(--transition-normal);
     font-weight: 500;
+    /*
+       On anime background, color et transform en même temps.
+       cubic-bezier(0.4, 0, 0.2, 1) = "ease standard" de Material Design
+       C'est la courbe la plus naturelle pour des transitions d'interface.
+    */
+    transition:
+        background 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        color 0.2s ease,
+        transform 0.2s ease;
 }
 
-/* État actif et hover */
 .nav-link:hover {
     color: var(--text-primary);
 }
 
 .nav-link.active {
-    background: var(--glass-bg);
+    background: rgba(255, 255, 255, 0.18);
     color: var(--text-primary);
 }
 
@@ -217,11 +228,11 @@ body {
     width: 44px;
     height: 44px;
     border-radius: var(--radius-md);
-    background: linear-gradient(135deg, rgba(255, 220, 200, 0.12) 0%, rgba(255, 180, 160, 0.06) 100%);
-    backdrop-filter: blur(30px) saturate(1.2);
-    -webkit-backdrop-filter: blur(30px) saturate(1.2);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: 0 4px 16px rgba(200, 120, 80, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    background: linear-gradient(135deg, rgba(255, 210, 190, 0.3) 0%, rgba(255, 190, 170, 0.2) 100%);
+    backdrop-filter: blur(40px) saturate(1.4);
+    -webkit-backdrop-filter: blur(40px) saturate(1.4);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 4px 16px rgba(180, 100, 70, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.25);
     color: var(--text-primary);
     cursor: pointer;
     display: flex;
@@ -270,11 +281,11 @@ body {
     width: 44px;
     height: 44px;
     border-radius: var(--radius-md);
-    background: linear-gradient(135deg, rgba(255, 220, 200, 0.12) 0%, rgba(255, 180, 160, 0.06) 100%);
-    backdrop-filter: blur(30px) saturate(1.2);
-    -webkit-backdrop-filter: blur(30px) saturate(1.2);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: 0 4px 16px rgba(200, 120, 80, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    background: linear-gradient(135deg, rgba(255, 210, 190, 0.3) 0%, rgba(255, 190, 170, 0.2) 100%);
+    backdrop-filter: blur(40px) saturate(1.4);
+    -webkit-backdrop-filter: blur(40px) saturate(1.4);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 4px 16px rgba(180, 100, 70, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.25);
     color: var(--text-secondary);
     cursor: pointer;
     display: flex;
@@ -307,27 +318,27 @@ body {
 */
 .card {
     /*
-       Glassmorphism amélioré :
-       - 2 couches de fond : un gradient léger + la couleur de base
-       - blur plus fort (30px) pour un vrai effet verre
-       - bordure avec gradient (haut clair → bas transparent)
-       - ombre colorée et diffuse
+       Glassmorphism "laiteux" comme dans la maquette :
+       - Opacité bien plus haute (0.25-0.35) → effet rosé laiteux
+       - Blur très fort (40px) → le fond est flou comme du verre dépoli
+       - saturate(1.4) → les couleurs derrière restent vives
+       - Bordure douce, presque invisible
     */
     background:
         linear-gradient(
             135deg,
-            rgba(255, 220, 200, 0.15) 0%,
-            rgba(255, 180, 160, 0.08) 100%
+            rgba(255, 210, 190, 0.35) 0%,
+            rgba(255, 190, 170, 0.25) 100%
         );
-    backdrop-filter: blur(30px) saturate(1.2);
-    -webkit-backdrop-filter: blur(30px) saturate(1.2);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    border-top-color: rgba(255, 255, 255, 0.3);  /* Bordure haute plus visible = effet lumière */
+    backdrop-filter: blur(40px) saturate(1.4);
+    -webkit-backdrop-filter: blur(40px) saturate(1.4);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-top-color: rgba(255, 255, 255, 0.4);
     border-radius: var(--radius-md);
     padding: var(--spacing-md);
     box-shadow:
-        0 8px 32px rgba(200, 120, 80, 0.1),         /* Ombre chaude externe */
-        inset 0 1px 0 rgba(255, 255, 255, 0.15);     /* Reflet interne en haut */
+        0 8px 32px rgba(180, 100, 70, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
     transition: var(--transition-normal);
 }
 
@@ -335,13 +346,13 @@ body {
     background:
         linear-gradient(
             135deg,
-            rgba(255, 220, 200, 0.22) 0%,
-            rgba(255, 180, 160, 0.12) 100%
+            rgba(255, 210, 190, 0.42) 0%,
+            rgba(255, 190, 170, 0.3) 100%
         );
     transform: translateY(-2px);
     box-shadow:
-        0 12px 40px rgba(200, 120, 80, 0.18),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        0 12px 40px rgba(180, 100, 70, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 /* Carte Journal */
@@ -509,42 +520,47 @@ body {
     position: relative;
 }
 
+/*
+   Le ring-container est plus grand pour correspondre à la maquette.
+   La ring dans le Figma prend ~50% de la hauteur de l'écran.
+*/
 .ring-container {
     position: relative;
-    width: 400px;
-    height: 400px;
+    width: 500px;
+    height: 500px;
     display: flex;
     align-items: center;
     justify-content: center;
+    animation: float 6s ease-in-out infinite;
 }
 
-/* Effet de lueur autour de la ring */
+/* Effet de lueur autour de la ring - plus large et plus chaud */
 .ring-glow {
     position: absolute;
-    width: 300px;
-    height: 300px;
+    width: 400px;
+    height: 400px;
     background: radial-gradient(
         circle,
-        rgba(232, 168, 124, 0.4) 0%,
+        rgba(232, 168, 124, 0.5) 0%,
+        rgba(255, 140, 50, 0.15) 40%,
         rgba(232, 168, 124, 0) 70%
     );
     border-radius: 50%;
-    filter: blur(30px);
+    filter: blur(40px);
     animation: pulse 3s ease-in-out infinite;
 }
 
 .ring-image {
-    width: 350px;
-    height: auto;  /* auto = garde les proportions naturelles de l'image */
+    /*
+       max-width au lieu de width fixe → responsive
+       La ring s'adaptera au container sans dépasser
+    */
+    max-width: 90%;
+    height: auto;
     position: relative;
     z-index: 1;
-    filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3));
+    filter: drop-shadow(0 20px 60px rgba(200, 100, 50, 0.35));
     transition: transform 0.1s ease-out;
-}
-
-/* Animation flottante subtile pour la ring */
-.ring-container {
-    animation: float 6s ease-in-out infinite;
 }
 
 @keyframes float {
@@ -712,35 +728,35 @@ body {
     align-items: center;
     gap: var(--spacing-xs);
     padding: var(--spacing-sm) var(--spacing-md);
-    background: linear-gradient(135deg, rgba(255, 220, 200, 0.12) 0%, rgba(255, 180, 160, 0.06) 100%);
-    backdrop-filter: blur(30px) saturate(1.2);
-    -webkit-backdrop-filter: blur(30px) saturate(1.2);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    border-top-color: rgba(255, 255, 255, 0.3);
+    background: linear-gradient(135deg, rgba(255, 210, 190, 0.3) 0%, rgba(255, 190, 170, 0.2) 100%);
+    backdrop-filter: blur(40px) saturate(1.4);
+    -webkit-backdrop-filter: blur(40px) saturate(1.4);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-top-color: rgba(255, 255, 255, 0.4);
     border-radius: var(--radius-lg);
     color: var(--text-primary);
     font-size: 13px;
     cursor: pointer;
-    box-shadow: 0 8px 32px rgba(200, 120, 80, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px rgba(180, 100, 70, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.25);
     transition: var(--transition-normal);
 }
 
 .btn-schedule:hover {
-    background: linear-gradient(135deg, rgba(255, 220, 200, 0.2) 0%, rgba(255, 180, 160, 0.1) 100%);
+    background: linear-gradient(135deg, rgba(255, 210, 190, 0.38) 0%, rgba(255, 190, 170, 0.28) 100%);
 }
 
 /* Navigation footer */
 .nav-footer {
     display: flex;
     gap: var(--spacing-xs);
-    background: linear-gradient(135deg, rgba(255, 220, 200, 0.12) 0%, rgba(255, 180, 160, 0.06) 100%);
-    backdrop-filter: blur(30px) saturate(1.2);
-    -webkit-backdrop-filter: blur(30px) saturate(1.2);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    border-top-color: rgba(255, 255, 255, 0.3);
+    background: linear-gradient(135deg, rgba(255, 210, 190, 0.3) 0%, rgba(255, 190, 170, 0.2) 100%);
+    backdrop-filter: blur(40px) saturate(1.4);
+    -webkit-backdrop-filter: blur(40px) saturate(1.4);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-top-color: rgba(255, 255, 255, 0.4);
     border-radius: var(--radius-lg);
     padding: var(--spacing-xs);
-    box-shadow: 0 8px 32px rgba(200, 120, 80, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px rgba(180, 100, 70, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }
 
 .nav-footer-btn {
@@ -754,32 +770,41 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: var(--transition-normal);
+    transition:
+        background 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        color 0.2s ease,
+        border-radius 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        transform 0.15s ease;
 }
 
 .nav-footer-btn:hover {
     color: var(--text-primary);
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.nav-footer-btn:active {
+    transform: scale(0.9);
 }
 
 .nav-footer-btn.active {
     background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
     color: white;
     border-radius: var(--radius-full);
+    box-shadow: 0 4px 15px rgba(232, 168, 124, 0.4);
 }
 
 /* Tabs footer */
 .footer-tabs {
     display: flex;
     gap: var(--spacing-xs);
-    background: linear-gradient(135deg, rgba(255, 220, 200, 0.12) 0%, rgba(255, 180, 160, 0.06) 100%);
-    backdrop-filter: blur(30px) saturate(1.2);
-    -webkit-backdrop-filter: blur(30px) saturate(1.2);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    border-top-color: rgba(255, 255, 255, 0.3);
+    background: linear-gradient(135deg, rgba(255, 210, 190, 0.3) 0%, rgba(255, 190, 170, 0.2) 100%);
+    backdrop-filter: blur(40px) saturate(1.4);
+    -webkit-backdrop-filter: blur(40px) saturate(1.4);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-top-color: rgba(255, 255, 255, 0.4);
     border-radius: var(--radius-lg);
     padding: var(--spacing-xs);
-    box-shadow: 0 8px 32px rgba(200, 120, 80, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px rgba(180, 100, 70, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }
 
 .tab {
@@ -791,15 +816,23 @@ body {
     font-size: 13px;
     font-weight: 500;
     cursor: pointer;
-    transition: var(--transition-normal);
+    transition:
+        background 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        color 0.2s ease,
+        transform 0.15s ease;
 }
 
 .tab:hover {
     color: var(--text-primary);
 }
 
+/* Petit scale au clic pour un feedback tactile */
+.tab:active {
+    transform: scale(0.95);
+}
+
 .tab.active {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.2);
     color: var(--text-primary);
 }
 

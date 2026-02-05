@@ -41,10 +41,15 @@ TABLE DES MATIÈRES:
     --text-secondary: rgba(255, 255, 255, 0.7);
     --text-muted: rgba(255, 255, 255, 0.5);
 
-    /* Glassmorphism - L'effet verre dépoli */
-    --glass-bg: rgba(255, 255, 255, 0.1);
-    --glass-border: rgba(255, 255, 255, 0.2);
-    --glass-shadow: rgba(0, 0, 0, 0.1);
+    /* Glassmorphism - L'effet verre dépoli
+       La différence avec avant :
+       - Le fond a une teinte rosée (255, 200, 180) au lieu de blanc pur
+       - La bordure est plus subtile (opacité 0.15 au lieu de 0.2)
+       - L'ombre est chaude (teinte pêche) au lieu de noire
+    */
+    --glass-bg: rgba(255, 200, 180, 0.12);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --glass-shadow: rgba(200, 120, 80, 0.15);
 
     /* Tailles */
     --radius-sm: 12px;
@@ -173,12 +178,14 @@ body {
 .nav-main {
     display: flex;
     gap: var(--spacing-xs);
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px);  /* EFFET VERRE DÉPOLI ! */
-    -webkit-backdrop-filter: blur(20px);  /* Pour Safari */
-    border: 1px solid var(--glass-border);
+    background: linear-gradient(135deg, rgba(255, 220, 200, 0.12) 0%, rgba(255, 180, 160, 0.06) 100%);
+    backdrop-filter: blur(30px) saturate(1.2);
+    -webkit-backdrop-filter: blur(30px) saturate(1.2);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-top-color: rgba(255, 255, 255, 0.3);
     border-radius: var(--radius-lg);
     padding: var(--spacing-xs);
+    box-shadow: 0 8px 32px rgba(200, 120, 80, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 .nav-link {
@@ -210,10 +217,11 @@ body {
     width: 44px;
     height: 44px;
     border-radius: var(--radius-md);
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
+    background: linear-gradient(135deg, rgba(255, 220, 200, 0.12) 0%, rgba(255, 180, 160, 0.06) 100%);
+    backdrop-filter: blur(30px) saturate(1.2);
+    -webkit-backdrop-filter: blur(30px) saturate(1.2);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 4px 16px rgba(200, 120, 80, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.15);
     color: var(--text-primary);
     cursor: pointer;
     display: flex;
@@ -262,10 +270,11 @@ body {
     width: 44px;
     height: 44px;
     border-radius: var(--radius-md);
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
+    background: linear-gradient(135deg, rgba(255, 220, 200, 0.12) 0%, rgba(255, 180, 160, 0.06) 100%);
+    backdrop-filter: blur(30px) saturate(1.2);
+    -webkit-backdrop-filter: blur(30px) saturate(1.2);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 4px 16px rgba(200, 120, 80, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.15);
     color: var(--text-secondary);
     cursor: pointer;
     display: flex;
@@ -297,19 +306,42 @@ body {
    - Ombre subtile
 */
 .card {
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
+    /*
+       Glassmorphism amélioré :
+       - 2 couches de fond : un gradient léger + la couleur de base
+       - blur plus fort (30px) pour un vrai effet verre
+       - bordure avec gradient (haut clair → bas transparent)
+       - ombre colorée et diffuse
+    */
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 220, 200, 0.15) 0%,
+            rgba(255, 180, 160, 0.08) 100%
+        );
+    backdrop-filter: blur(30px) saturate(1.2);
+    -webkit-backdrop-filter: blur(30px) saturate(1.2);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-top-color: rgba(255, 255, 255, 0.3);  /* Bordure haute plus visible = effet lumière */
     border-radius: var(--radius-md);
     padding: var(--spacing-md);
+    box-shadow:
+        0 8px 32px rgba(200, 120, 80, 0.1),         /* Ombre chaude externe */
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);     /* Reflet interne en haut */
     transition: var(--transition-normal);
 }
 
 .card:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 220, 200, 0.22) 0%,
+            rgba(255, 180, 160, 0.12) 100%
+        );
     transform: translateY(-2px);
-    box-shadow: 0 10px 40px var(--glass-shadow);
+    box-shadow:
+        0 12px 40px rgba(200, 120, 80, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 /* Carte Journal */
@@ -503,12 +535,10 @@ body {
 
 .ring-image {
     width: 350px;
-    height: 350px;
+    height: auto;  /* auto = garde les proportions naturelles de l'image */
     position: relative;
     z-index: 1;
-    /* Ombre portée pour l'effet 3D */
     filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3));
-    /* Transition fluide pour les animations JS */
     transition: transform 0.1s ease-out;
 }
 
@@ -682,31 +712,35 @@ body {
     align-items: center;
     gap: var(--spacing-xs);
     padding: var(--spacing-sm) var(--spacing-md);
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
+    background: linear-gradient(135deg, rgba(255, 220, 200, 0.12) 0%, rgba(255, 180, 160, 0.06) 100%);
+    backdrop-filter: blur(30px) saturate(1.2);
+    -webkit-backdrop-filter: blur(30px) saturate(1.2);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-top-color: rgba(255, 255, 255, 0.3);
     border-radius: var(--radius-lg);
     color: var(--text-primary);
     font-size: 13px;
     cursor: pointer;
+    box-shadow: 0 8px 32px rgba(200, 120, 80, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.15);
     transition: var(--transition-normal);
 }
 
 .btn-schedule:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: linear-gradient(135deg, rgba(255, 220, 200, 0.2) 0%, rgba(255, 180, 160, 0.1) 100%);
 }
 
 /* Navigation footer */
 .nav-footer {
     display: flex;
     gap: var(--spacing-xs);
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
+    background: linear-gradient(135deg, rgba(255, 220, 200, 0.12) 0%, rgba(255, 180, 160, 0.06) 100%);
+    backdrop-filter: blur(30px) saturate(1.2);
+    -webkit-backdrop-filter: blur(30px) saturate(1.2);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-top-color: rgba(255, 255, 255, 0.3);
     border-radius: var(--radius-lg);
     padding: var(--spacing-xs);
+    box-shadow: 0 8px 32px rgba(200, 120, 80, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 .nav-footer-btn {
@@ -738,12 +772,14 @@ body {
 .footer-tabs {
     display: flex;
     gap: var(--spacing-xs);
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
+    background: linear-gradient(135deg, rgba(255, 220, 200, 0.12) 0%, rgba(255, 180, 160, 0.06) 100%);
+    backdrop-filter: blur(30px) saturate(1.2);
+    -webkit-backdrop-filter: blur(30px) saturate(1.2);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-top-color: rgba(255, 255, 255, 0.3);
     border-radius: var(--radius-lg);
     padding: var(--spacing-xs);
+    box-shadow: 0 8px 32px rgba(200, 120, 80, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 .tab {

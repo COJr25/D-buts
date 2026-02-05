@@ -51,10 +51,11 @@ TABLE DES MATIÈRES:
     --glass-border: rgba(255, 255, 255, 0.15);
     --glass-shadow: rgba(200, 120, 80, 0.15);
 
-    /* Tailles */
-    --radius-sm: 12px;
-    --radius-md: 20px;
-    --radius-lg: 30px;
+    /* Tailles - coins plus arrondis comme la maquette */
+    --radius-sm: 16px;
+    --radius-md: 28px;
+    --radius-lg: 32px;
+    --radius-xl: 50px;    /* Pour les formes capsule (panel droit) */
     --radius-full: 50%;
 
     /* Spacing */
@@ -178,18 +179,24 @@ body {
     height: 100%;
 }
 
-/* Navigation principale - même style laiteux que les cartes */
+/* Navigation principale - liquid glass saumon */
 .nav-main {
     display: flex;
     gap: var(--spacing-xs);
-    background: linear-gradient(135deg, rgba(255, 210, 190, 0.3) 0%, rgba(255, 190, 170, 0.2) 100%);
-    backdrop-filter: blur(40px) saturate(1.4);
-    -webkit-backdrop-filter: blur(40px) saturate(1.4);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    border-top-color: rgba(255, 255, 255, 0.4);
+    background:
+        linear-gradient(
+            160deg,
+            rgba(235, 180, 160, 0.55) 0%,
+            rgba(220, 170, 155, 0.45) 100%
+        );
+    backdrop-filter: blur(50px) saturate(1.5);
+    -webkit-backdrop-filter: blur(50px) saturate(1.5);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: var(--radius-lg);
     padding: var(--spacing-xs);
-    box-shadow: 0 8px 32px rgba(180, 100, 70, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    box-shadow:
+        0 8px 32px rgba(160, 80, 50, 0.08),
+        inset 0 1px 1px rgba(255, 255, 255, 0.25);
     /*
        position: relative = le container devient la "référence" pour le slider
        Le slider (position: absolute) se positionnera PAR RAPPORT à ce container
@@ -244,21 +251,39 @@ body {
     color: var(--text-primary);
 }
 
-/* Boutons d'action header */
+/* Boutons d'action header - pilule contenant les 2 icônes */
 .header-actions {
     display: flex;
-    gap: var(--spacing-sm);
+    align-items: center;
+    background:
+        linear-gradient(
+            160deg,
+            rgba(235, 180, 160, 0.55) 0%,
+            rgba(220, 170, 155, 0.45) 100%
+        );
+    backdrop-filter: blur(50px) saturate(1.5);
+    -webkit-backdrop-filter: blur(50px) saturate(1.5);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-lg);
+    padding: 4px;
+    box-shadow:
+        0 4px 16px rgba(160, 80, 50, 0.08),
+        inset 0 1px 1px rgba(255, 255, 255, 0.25);
+}
+
+/* Séparateur vertical entre les 2 icônes */
+.icon-divider {
+    width: 1px;
+    height: 24px;
+    background: rgba(255, 255, 255, 0.2);
 }
 
 .icon-btn {
     width: 44px;
     height: 44px;
     border-radius: var(--radius-md);
-    background: linear-gradient(135deg, rgba(255, 210, 190, 0.3) 0%, rgba(255, 190, 170, 0.2) 100%);
-    backdrop-filter: blur(40px) saturate(1.4);
-    -webkit-backdrop-filter: blur(40px) saturate(1.4);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    box-shadow: 0 4px 16px rgba(180, 100, 70, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    background: transparent;
+    border: none;
     color: var(--text-primary);
     cursor: pointer;
     display: flex;
@@ -307,11 +332,18 @@ body {
     width: 44px;
     height: 44px;
     border-radius: var(--radius-md);
-    background: linear-gradient(135deg, rgba(255, 210, 190, 0.3) 0%, rgba(255, 190, 170, 0.2) 100%);
-    backdrop-filter: blur(40px) saturate(1.4);
-    -webkit-backdrop-filter: blur(40px) saturate(1.4);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    box-shadow: 0 4px 16px rgba(180, 100, 70, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    background:
+        linear-gradient(
+            160deg,
+            rgba(235, 180, 160, 0.55) 0%,
+            rgba(220, 170, 155, 0.45) 100%
+        );
+    backdrop-filter: blur(50px) saturate(1.5);
+    -webkit-backdrop-filter: blur(50px) saturate(1.5);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow:
+        0 4px 16px rgba(160, 80, 50, 0.08),
+        inset 0 1px 1px rgba(255, 255, 255, 0.25);
     color: var(--text-secondary);
     cursor: pointer;
     display: flex;
@@ -344,41 +376,51 @@ body {
 */
 .card {
     /*
-       Glassmorphism "laiteux" comme dans la maquette :
-       - Opacité bien plus haute (0.25-0.35) → effet rosé laiteux
-       - Blur très fort (40px) → le fond est flou comme du verre dépoli
-       - saturate(1.4) → les couleurs derrière restent vives
-       - Bordure douce, presque invisible
+       LIQUID GLASS fidèle à la maquette :
+       ==================================
+       La maquette montre un verre OPAQUE teinté saumon.
+       Ce n'est PAS du verre transparent avec un flou.
+       C'est du verre COLORÉ et ÉPAIS.
+
+       Recette :
+       1. Fond : saumon opaque (0.55) = la base rosée qu'on voit
+       2. Blur (50px) = on ne distingue rien derrière
+       3. Bordure quasi invisible (0.12)
+       4. Ombre interne diffuse = sensation d'épaisseur du verre
+       5. Ombre externe douce et chaude = profondeur
     */
     background:
         linear-gradient(
-            135deg,
-            rgba(255, 210, 190, 0.35) 0%,
-            rgba(255, 190, 170, 0.25) 100%
+            160deg,
+            rgba(235, 180, 160, 0.6) 0%,
+            rgba(220, 170, 155, 0.5) 50%,
+            rgba(210, 160, 145, 0.55) 100%
         );
-    backdrop-filter: blur(40px) saturate(1.4);
-    -webkit-backdrop-filter: blur(40px) saturate(1.4);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    border-top-color: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(50px) saturate(1.5);
+    -webkit-backdrop-filter: blur(50px) saturate(1.5);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: var(--radius-md);
     padding: var(--spacing-md);
     box-shadow:
-        0 8px 32px rgba(180, 100, 70, 0.08),
-        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+        0 8px 32px rgba(160, 80, 50, 0.1),
+        inset 0 1px 1px rgba(255, 255, 255, 0.3),
+        inset 0 -1px 1px rgba(200, 120, 80, 0.08);
     transition: var(--transition-normal);
 }
 
 .card:hover {
     background:
         linear-gradient(
-            135deg,
-            rgba(255, 210, 190, 0.42) 0%,
-            rgba(255, 190, 170, 0.3) 100%
+            160deg,
+            rgba(235, 180, 160, 0.67) 0%,
+            rgba(220, 170, 155, 0.57) 50%,
+            rgba(210, 160, 145, 0.62) 100%
         );
     transform: translateY(-2px);
     box-shadow:
-        0 12px 40px rgba(180, 100, 70, 0.12),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        0 12px 40px rgba(160, 80, 50, 0.14),
+        inset 0 1px 1px rgba(255, 255, 255, 0.35),
+        inset 0 -1px 1px rgba(200, 120, 80, 0.1);
 }
 
 /* Carte Journal */
@@ -614,10 +656,53 @@ body {
    9. PANEL DROITE
    ============================================
 */
+/*
+   Le panel droit dans la maquette est une GRANDE CAPSULE unique
+   qui contient le profil ET le poids.
+   On utilise un border-radius très arrondi (var(--radius-xl))
+   et on retire le gap entre les cartes pour qu'elles fusionnent.
+*/
 .right-panel {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-md);
+    gap: 2px;  /* Minuscule gap au lieu de 20px = les cartes semblent fusionnées */
+    background:
+        linear-gradient(
+            180deg,
+            rgba(235, 180, 160, 0.5) 0%,
+            rgba(220, 170, 155, 0.55) 100%
+        );
+    backdrop-filter: blur(50px) saturate(1.5);
+    -webkit-backdrop-filter: blur(50px) saturate(1.5);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-xl);
+    padding: 2px;
+    box-shadow:
+        0 8px 32px rgba(160, 80, 50, 0.1),
+        inset 0 1px 1px rgba(255, 255, 255, 0.2);
+    overflow: hidden;
+}
+
+/* Les cartes à l'intérieur du panel droit n'ont pas besoin
+   de leur propre glassmorphism - le panel s'en charge */
+.right-panel .card {
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+.right-panel .card:hover {
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: none;
+    transform: none;
+}
+
+/* Séparateur subtil entre profil et poids */
+.right-panel .card-profile {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Carte Profil */
@@ -754,35 +839,40 @@ body {
     align-items: center;
     gap: var(--spacing-xs);
     padding: var(--spacing-sm) var(--spacing-md);
-    background: linear-gradient(135deg, rgba(255, 210, 190, 0.3) 0%, rgba(255, 190, 170, 0.2) 100%);
-    backdrop-filter: blur(40px) saturate(1.4);
-    -webkit-backdrop-filter: blur(40px) saturate(1.4);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    border-top-color: rgba(255, 255, 255, 0.4);
+    background:
+        linear-gradient(160deg, rgba(235, 180, 160, 0.55) 0%, rgba(220, 170, 155, 0.45) 100%);
+    backdrop-filter: blur(50px) saturate(1.5);
+    -webkit-backdrop-filter: blur(50px) saturate(1.5);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: var(--radius-lg);
     color: var(--text-primary);
     font-size: 13px;
     cursor: pointer;
-    box-shadow: 0 8px 32px rgba(180, 100, 70, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    box-shadow:
+        0 8px 32px rgba(160, 80, 50, 0.08),
+        inset 0 1px 1px rgba(255, 255, 255, 0.25);
     transition: var(--transition-normal);
 }
 
 .btn-schedule:hover {
-    background: linear-gradient(135deg, rgba(255, 210, 190, 0.38) 0%, rgba(255, 190, 170, 0.28) 100%);
+    background:
+        linear-gradient(160deg, rgba(235, 180, 160, 0.62) 0%, rgba(220, 170, 155, 0.52) 100%);
 }
 
 /* Navigation footer */
 .nav-footer {
     display: flex;
     gap: var(--spacing-xs);
-    background: linear-gradient(135deg, rgba(255, 210, 190, 0.3) 0%, rgba(255, 190, 170, 0.2) 100%);
-    backdrop-filter: blur(40px) saturate(1.4);
-    -webkit-backdrop-filter: blur(40px) saturate(1.4);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    border-top-color: rgba(255, 255, 255, 0.4);
+    background:
+        linear-gradient(160deg, rgba(235, 180, 160, 0.55) 0%, rgba(220, 170, 155, 0.45) 100%);
+    backdrop-filter: blur(50px) saturate(1.5);
+    -webkit-backdrop-filter: blur(50px) saturate(1.5);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: var(--radius-lg);
     padding: var(--spacing-xs);
-    box-shadow: 0 8px 32px rgba(180, 100, 70, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    box-shadow:
+        0 8px 32px rgba(160, 80, 50, 0.08),
+        inset 0 1px 1px rgba(255, 255, 255, 0.25);
 }
 
 .nav-footer-btn {
@@ -823,14 +913,16 @@ body {
 .footer-tabs {
     display: flex;
     gap: var(--spacing-xs);
-    background: linear-gradient(135deg, rgba(255, 210, 190, 0.3) 0%, rgba(255, 190, 170, 0.2) 100%);
-    backdrop-filter: blur(40px) saturate(1.4);
-    -webkit-backdrop-filter: blur(40px) saturate(1.4);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    border-top-color: rgba(255, 255, 255, 0.4);
+    background:
+        linear-gradient(160deg, rgba(235, 180, 160, 0.55) 0%, rgba(220, 170, 155, 0.45) 100%);
+    backdrop-filter: blur(50px) saturate(1.5);
+    -webkit-backdrop-filter: blur(50px) saturate(1.5);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: var(--radius-lg);
     padding: var(--spacing-xs);
-    box-shadow: 0 8px 32px rgba(180, 100, 70, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    box-shadow:
+        0 8px 32px rgba(160, 80, 50, 0.08),
+        inset 0 1px 1px rgba(255, 255, 255, 0.25);
     position: relative;
 }
 

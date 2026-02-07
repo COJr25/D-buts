@@ -186,8 +186,8 @@ body {
     background:
         linear-gradient(
             160deg,
-            rgba(235, 180, 160, 0.55) 0%,
-            rgba(220, 170, 155, 0.45) 100%
+            rgba(235, 180, 160, 0.35) 0%,
+            rgba(220, 170, 155, 0.28) 100%
         );
     backdrop-filter: blur(50px) saturate(1.5);
     -webkit-backdrop-filter: blur(50px) saturate(1.5);
@@ -258,8 +258,8 @@ body {
     background:
         linear-gradient(
             160deg,
-            rgba(235, 180, 160, 0.55) 0%,
-            rgba(220, 170, 155, 0.45) 100%
+            rgba(235, 180, 160, 0.35) 0%,
+            rgba(220, 170, 155, 0.28) 100%
         );
     backdrop-filter: blur(50px) saturate(1.5);
     -webkit-backdrop-filter: blur(50px) saturate(1.5);
@@ -335,8 +335,8 @@ body {
     background:
         linear-gradient(
             160deg,
-            rgba(235, 180, 160, 0.55) 0%,
-            rgba(220, 170, 155, 0.45) 100%
+            rgba(235, 180, 160, 0.35) 0%,
+            rgba(220, 170, 155, 0.28) 100%
         );
     backdrop-filter: blur(50px) saturate(1.5);
     -webkit-backdrop-filter: blur(50px) saturate(1.5);
@@ -392,9 +392,9 @@ body {
     background:
         linear-gradient(
             160deg,
-            rgba(235, 180, 160, 0.6) 0%,
-            rgba(220, 170, 155, 0.5) 50%,
-            rgba(210, 160, 145, 0.55) 100%
+            rgba(235, 180, 160, 0.38) 0%,
+            rgba(220, 170, 155, 0.3) 50%,
+            rgba(210, 160, 145, 0.33) 100%
         );
     backdrop-filter: blur(50px) saturate(1.5);
     -webkit-backdrop-filter: blur(50px) saturate(1.5);
@@ -412,9 +412,9 @@ body {
     background:
         linear-gradient(
             160deg,
-            rgba(235, 180, 160, 0.67) 0%,
-            rgba(220, 170, 155, 0.57) 50%,
-            rgba(210, 160, 145, 0.62) 100%
+            rgba(235, 180, 160, 0.45) 0%,
+            rgba(220, 170, 155, 0.38) 50%,
+            rgba(210, 160, 145, 0.4) 100%
         );
     transform: translateY(-2px);
     box-shadow:
@@ -669,8 +669,8 @@ body {
     background:
         linear-gradient(
             180deg,
-            rgba(235, 180, 160, 0.5) 0%,
-            rgba(220, 170, 155, 0.55) 100%
+            rgba(235, 180, 160, 0.35) 0%,
+            rgba(220, 170, 155, 0.38) 100%
         );
     backdrop-filter: blur(50px) saturate(1.5);
     -webkit-backdrop-filter: blur(50px) saturate(1.5);
@@ -840,7 +840,7 @@ body {
     gap: var(--spacing-xs);
     padding: var(--spacing-sm) var(--spacing-md);
     background:
-        linear-gradient(160deg, rgba(235, 180, 160, 0.55) 0%, rgba(220, 170, 155, 0.45) 100%);
+        linear-gradient(160deg, rgba(235, 180, 160, 0.35) 0%, rgba(220, 170, 155, 0.28) 100%);
     backdrop-filter: blur(50px) saturate(1.5);
     -webkit-backdrop-filter: blur(50px) saturate(1.5);
     border: 1px solid rgba(255, 255, 255, 0.12);
@@ -856,7 +856,7 @@ body {
 
 .btn-schedule:hover {
     background:
-        linear-gradient(160deg, rgba(235, 180, 160, 0.62) 0%, rgba(220, 170, 155, 0.52) 100%);
+        linear-gradient(160deg, rgba(235, 180, 160, 0.45) 0%, rgba(220, 170, 155, 0.38) 100%);
 }
 
 /* Navigation footer */
@@ -864,7 +864,7 @@ body {
     display: flex;
     gap: var(--spacing-xs);
     background:
-        linear-gradient(160deg, rgba(235, 180, 160, 0.55) 0%, rgba(220, 170, 155, 0.45) 100%);
+        linear-gradient(160deg, rgba(235, 180, 160, 0.35) 0%, rgba(220, 170, 155, 0.28) 100%);
     backdrop-filter: blur(50px) saturate(1.5);
     -webkit-backdrop-filter: blur(50px) saturate(1.5);
     border: 1px solid rgba(255, 255, 255, 0.12);
@@ -914,7 +914,7 @@ body {
     display: flex;
     gap: var(--spacing-xs);
     background:
-        linear-gradient(160deg, rgba(235, 180, 160, 0.55) 0%, rgba(220, 170, 155, 0.45) 100%);
+        linear-gradient(160deg, rgba(235, 180, 160, 0.35) 0%, rgba(220, 170, 155, 0.28) 100%);
     backdrop-filter: blur(50px) saturate(1.5);
     -webkit-backdrop-filter: blur(50px) saturate(1.5);
     border: 1px solid rgba(255, 255, 255, 0.12);

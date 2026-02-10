@@ -840,6 +840,7 @@ body {
     align-items: center;
     gap: var(--spacing-xs);
     padding: var(--spacing-sm) var(--spacing-md);
+    margin-right: 350px;
     background:
         linear-gradient(160deg, rgba(235, 180, 160, 0.35) 0%, rgba(220, 170, 155, 0.28) 100%);
     backdrop-filter: blur(50px) saturate(1.5);

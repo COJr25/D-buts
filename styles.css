@@ -831,6 +831,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: var(--spacing-sm) var(--spacing-md);
+    margin-left: 20px;
 }
 
 /* Bouton Schedule */

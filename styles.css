@@ -581,6 +581,16 @@ body {
     color: var(--text-secondary);
 }
 
+.calories-graph {
+    width: 100%;
+    height: 30px;
+    margin-top: var(--spacing-xs);
+}
+
+.trend-icon {
+    color: rgba(255,255,255,0.7);
+}
+
 .heart-graph {
     width: 100%;
     height: 20px;

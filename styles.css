@@ -186,11 +186,11 @@ body {
     background:
         linear-gradient(
             160deg,
-            rgba(235, 180, 160, 0.35) 0%,
-            rgba(220, 170, 155, 0.28) 100%
+            rgba(235, 180, 160, 0.15) 0%,
+            rgba(220, 170, 155, 0.12) 100%
         );
-    backdrop-filter: blur(50px) saturate(1.5);
-    -webkit-backdrop-filter: blur(50px) saturate(1.5);
+    backdrop-filter: blur(18px) saturate(1.5);
+    -webkit-backdrop-filter: blur(18px) saturate(1.5);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: var(--radius-lg);
     padding: var(--spacing-xs);
@@ -258,11 +258,11 @@ body {
     background:
         linear-gradient(
             160deg,
-            rgba(235, 180, 160, 0.35) 0%,
-            rgba(220, 170, 155, 0.28) 100%
+            rgba(235, 180, 160, 0.15) 0%,
+            rgba(220, 170, 155, 0.12) 100%
         );
-    backdrop-filter: blur(50px) saturate(1.5);
-    -webkit-backdrop-filter: blur(50px) saturate(1.5);
+    backdrop-filter: blur(18px) saturate(1.5);
+    -webkit-backdrop-filter: blur(18px) saturate(1.5);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: var(--radius-lg);
     padding: 4px;
@@ -275,7 +275,7 @@ body {
 .icon-divider {
     width: 1px;
     height: 24px;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .icon-btn {
@@ -293,7 +293,7 @@ body {
 }
 
 .icon-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
     transform: scale(1.05);
 }
 
@@ -335,11 +335,11 @@ body {
     background:
         linear-gradient(
             160deg,
-            rgba(235, 180, 160, 0.35) 0%,
-            rgba(220, 170, 155, 0.28) 100%
+            rgba(235, 180, 160, 0.15) 0%,
+            rgba(220, 170, 155, 0.12) 100%
         );
-    backdrop-filter: blur(50px) saturate(1.5);
-    -webkit-backdrop-filter: blur(50px) saturate(1.5);
+    backdrop-filter: blur(18px) saturate(1.5);
+    -webkit-backdrop-filter: blur(18px) saturate(1.5);
     border: 1px solid rgba(255, 255, 255, 0.12);
     box-shadow:
         0 4px 16px rgba(160, 80, 50, 0.08),
@@ -353,7 +353,7 @@ body {
 }
 
 .sidebar-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
     color: var(--text-primary);
 }
 
@@ -392,12 +392,12 @@ body {
     background:
         linear-gradient(
             160deg,
-            rgba(235, 180, 160, 0.38) 0%,
-            rgba(220, 170, 155, 0.3) 50%,
-            rgba(210, 160, 145, 0.33) 100%
+            rgba(235, 180, 160, 0.15) 0%,
+            rgba(220, 170, 155, 0.12) 50%,
+            rgba(210, 160, 145, 0.14) 100%
         );
-    backdrop-filter: blur(50px) saturate(1.5);
-    -webkit-backdrop-filter: blur(50px) saturate(1.5);
+    backdrop-filter: blur(18px) saturate(1.5);
+    -webkit-backdrop-filter: blur(18px) saturate(1.5);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: var(--radius-md);
     padding: var(--spacing-md);
@@ -412,9 +412,9 @@ body {
     background:
         linear-gradient(
             160deg,
-            rgba(235, 180, 160, 0.45) 0%,
-            rgba(220, 170, 155, 0.38) 50%,
-            rgba(210, 160, 145, 0.4) 100%
+            rgba(235, 180, 160, 0.22) 0%,
+            rgba(220, 170, 155, 0.18) 50%,
+            rgba(210, 160, 145, 0.2) 100%
         );
     transform: translateY(-2px);
     box-shadow:
@@ -463,7 +463,7 @@ body {
 }
 
 .btn-primary {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
     color: var(--text-primary);
 }
 
@@ -679,17 +679,17 @@ body {
     background:
         linear-gradient(
             180deg,
-            rgba(235, 180, 160, 0.35) 0%,
-            rgba(220, 170, 155, 0.38) 100%
+            rgba(235, 180, 160, 0.15) 0%,
+            rgba(220, 170, 155, 0.15) 100%
         );
-    backdrop-filter: blur(50px) saturate(1.5);
-    -webkit-backdrop-filter: blur(50px) saturate(1.5);
+    backdrop-filter: blur(18px) saturate(1.5);
+    -webkit-backdrop-filter: blur(18px) saturate(1.5);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: var(--radius-xl);
     padding: 2px;
     box-shadow:
         0 8px 32px rgba(160, 80, 50, 0.1),
-        inset 0 1px 1px rgba(255, 255, 255, 0.2);
+        inset 0 1px 1px rgba(255, 255, 255, 0.1);
     overflow: hidden;
 }
 
@@ -850,9 +850,9 @@ body {
     gap: var(--spacing-xs);
     padding: var(--spacing-sm) var(--spacing-md);
     background:
-        linear-gradient(160deg, rgba(235, 180, 160, 0.35) 0%, rgba(220, 170, 155, 0.28) 100%);
-    backdrop-filter: blur(50px) saturate(1.5);
-    -webkit-backdrop-filter: blur(50px) saturate(1.5);
+        linear-gradient(160deg, rgba(235, 180, 160, 0.15) 0%, rgba(220, 170, 155, 0.12) 100%);
+    backdrop-filter: blur(18px) saturate(1.5);
+    -webkit-backdrop-filter: blur(18px) saturate(1.5);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: var(--radius-lg);
     color: var(--text-primary);
@@ -866,7 +866,7 @@ body {
 
 .btn-schedule:hover {
     background:
-        linear-gradient(160deg, rgba(235, 180, 160, 0.45) 0%, rgba(220, 170, 155, 0.38) 100%);
+        linear-gradient(160deg, rgba(235, 180, 160, 0.22) 0%, rgba(220, 170, 155, 0.15) 100%);
 }
 
 /* Navigation footer */
@@ -874,9 +874,9 @@ body {
     display: flex;
     gap: var(--spacing-xs);
     background:
-        linear-gradient(160deg, rgba(235, 180, 160, 0.35) 0%, rgba(220, 170, 155, 0.28) 100%);
-    backdrop-filter: blur(50px) saturate(1.5);
-    -webkit-backdrop-filter: blur(50px) saturate(1.5);
+        linear-gradient(160deg, rgba(235, 180, 160, 0.15) 0%, rgba(220, 170, 155, 0.12) 100%);
+    backdrop-filter: blur(18px) saturate(1.5);
+    -webkit-backdrop-filter: blur(18px) saturate(1.5);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: var(--radius-lg);
     padding: var(--spacing-xs);
@@ -925,9 +925,9 @@ body {
     display: flex;
     gap: var(--spacing-xs);
     background:
-        linear-gradient(160deg, rgba(235, 180, 160, 0.35) 0%, rgba(220, 170, 155, 0.28) 100%);
-    backdrop-filter: blur(50px) saturate(1.5);
-    -webkit-backdrop-filter: blur(50px) saturate(1.5);
+        linear-gradient(160deg, rgba(235, 180, 160, 0.15) 0%, rgba(220, 170, 155, 0.12) 100%);
+    backdrop-filter: blur(18px) saturate(1.5);
+    -webkit-backdrop-filter: blur(18px) saturate(1.5);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: var(--radius-lg);
     padding: var(--spacing-xs);
@@ -940,7 +940,7 @@ body {
 .tab-slider {
     position: absolute;
     height: calc(100% - 2 * var(--spacing-xs));
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
     border-radius: var(--radius-md);
     transition:
         left 0.6s cubic-bezier(0.22, 0.68, 0, 1.2),

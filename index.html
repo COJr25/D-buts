@@ -26,31 +26,27 @@
     }
 
     /* =============================================
-       FRAME PRINCIPAL
+       FRAME PRINCIPAL - PLEIN ÉCRAN SANS BORDURES
     ============================================= */
     .frame {
       position: relative;
       width: 1920px;
       height: 1080px;
-      border-radius: 30px;
       overflow: hidden;
       font-family: 'Urbanist', sans-serif;
     }
 
-    /* --------- ARRIÈRE-PLAN --------- */
+    /* --------- ARRIÈRE-PLAN - COUVRE TOUT --------- */
     .bg {
       position: absolute;
       inset: 0;
-      border-radius: 30px;
     }
     .bg img {
       position: absolute;
-      width: 117.97%;
-      height: 157.96%;
-      left: -8.98%;
-      top: -28.98%;
-      max-width: none;
-      border-radius: 30px;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
     }
 
     /* =============================================
@@ -180,19 +176,19 @@
     .product-ring {
       position: absolute;
       left: 50%;
-      transform: translateX(-50%);
-      top: 254px;
-      width: 456.5px;
-      height: 548.4px;
-      overflow: hidden;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 500px;
+      height: 500px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .product-ring img {
-      position: absolute;
-      width: 289.42%;
-      height: 160.62%;
-      left: -96.11%;
-      top: -28.37%;
-      max-width: none;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 20px 60px rgba(200, 100, 50, 0.35));
     }
 
     /* =============================================
@@ -321,9 +317,9 @@
     ============================================= */
     .journal-card {
       position: absolute;
-      left: 198px;
-      top: 291px;
-      width: 386px;
+      left: 120px;
+      top: 200px;
+      width: 320px;
       border-radius: 22px;
       padding: 12px;
       overflow: hidden;
@@ -389,10 +385,10 @@
     ============================================= */
     .activity-card {
       position: absolute;
-      left: 195px;
-      top: 470px;
-      width: 386px;
-      height: 170px;
+      left: 120px;
+      top: 400px;
+      width: 320px;
+      height: 150px;
       border-radius: 30px;
     }
     .activity-inner {
@@ -445,10 +441,10 @@
     ============================================= */
     .calories-card {
       position: absolute;
-      left: 195px;
-      top: 656px;
-      width: 182px;
-      height: 135px;
+      left: 120px;
+      top: 580px;
+      width: 150px;
+      height: 120px;
       border-radius: 30px;
       padding: 14px 23px;
     }
@@ -480,10 +476,10 @@
     ============================================= */
     .heart-card {
       position: absolute;
-      left: 393px;
-      top: 656px;
-      width: 182px;
-      height: 135px;
+      left: 285px;
+      top: 580px;
+      width: 155px;
+      height: 120px;
       border-radius: 30px;
     }
     .heart-card-inner {
@@ -825,7 +821,7 @@
     </div>
 
     <!-- HEART RATE CARD -->
-    <div style="position:absolute;left:393px;top:656px;">
+    <div style="position:absolute;left:285px;top:580px;">
       <div class="heart-card-inner glass" style="border-radius:30px;">
         <span class="heart-title">Heart Rate</span>
         <div class="heart-icon">

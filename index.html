@@ -1,277 +1,935 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Ring Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
-    <!-- Google Fonts - On utilise Inter pour un look moderne -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lunarix One</title>
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700&family=Inter:wght@400&display=swap" rel="stylesheet" />
+  <style>
+    /* =============================================
+       RESET & BASE
+    ============================================= */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #1a0e0e; }
+
+    /* =============================================
+       WRAPPER — le design est conçu en 1920×1080.
+       On le scale pour remplir la fenêtre tout en
+       gardant les proportions exactes de Figma.
+    ============================================= */
+    #app {
+      position: fixed;
+      top: 0; left: 0;
+      width: 1920px;
+      height: 1080px;
+      transform-origin: top left;
+    }
+
+    /* =============================================
+       FRAME PRINCIPAL
+    ============================================= */
+    .frame {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      border-radius: 30px;
+      overflow: hidden;
+      font-family: 'Urbanist', sans-serif;
+    }
+
+    /* --------- ARRIÈRE-PLAN --------- */
+    .bg {
+      position: absolute;
+      inset: 0;
+      border-radius: 30px;
+    }
+    .bg img {
+      position: absolute;
+      width: 117.97%;
+      height: 157.96%;
+      left: -8.98%;
+      top: -28.98%;
+      max-width: none;
+      border-radius: 30px;
+    }
+
+    /* =============================================
+       GLASSMORPHISM — LE VRAI STYLE FIGMA
+    ============================================= */
+    .glass {
+      backdrop-filter: blur(52.65px);
+      -webkit-backdrop-filter: blur(52.65px);
+      background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(255,255,255,0.1) 100%);
+      border: 1px solid rgba(255,255,255,0.15);
+      box-shadow: 1px 13px 19.8px 0 rgba(0,0,0,0.03),
+                  inset 0 1px 0 rgba(255,255,255,0.4),
+                  inset 0 -1px 0 rgba(255,255,255,0.15);
+    }
+    .glass-sm {
+      backdrop-filter: blur(43.25px);
+      -webkit-backdrop-filter: blur(43.25px);
+      background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(255,255,255,0.1) 100%);
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: inset 0 0 15px rgba(0,0,0,0.2);
+    }
+
+    /* =============================================
+       LOGO (top-left)
+    ============================================= */
+    .logo {
+      position: absolute;
+      left: 40px;
+      top: 51.5px;
+      width: 56px;
+      height: 40px;
+    }
+    .logo svg { width: 100%; height: 100%; }
+
+    /* =============================================
+       NAVIGATION CENTRALE (top)
+    ============================================= */
+    .nav-center {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 37.99px;
+      width: 338px;
+      height: 67px;
+      border-radius: 60px;
+    }
+    .nav-center .glass-sm {
+      position: absolute;
+      inset: 0;
+      border-radius: 60px;
+    }
+    .nav-center .nav-items {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 5.5px;
+    }
+    .nav-btn {
+      height: 56px;
+      padding: 18px 20px;
+      border-radius: 60px;
+      font-family: 'Urbanist', sans-serif;
+      font-size: 16px;
+      color: white;
+      font-weight: 400;
+      cursor: pointer;
+      white-space: nowrap;
+      background: transparent;
+      border: none;
+      transition: background 0.2s;
+    }
+    .nav-btn.active {
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(52.65px);
+    }
+    .nav-btn:hover:not(.active) {
+      background: rgba(255,255,255,0.1);
+    }
+
+    /* =============================================
+       BOUTONS TOP-RIGHT (paramètres + globe)
+    ============================================= */
+    .top-right-btns {
+      position: absolute;
+      right: 40px;
+      top: 37.99px;
+      width: 133px;
+      height: 67px;
+      border-radius: 60px;
+    }
+    .top-right-btns .glass-sm {
+      position: absolute;
+      inset: 0;
+      border-radius: 60px;
+    }
+    .top-right-btns .btn-group {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      padding: 5px;
+    }
+    .icon-btn {
+      width: 59px;
+      height: 59px;
+      border-radius: 29px;
+      background: rgba(255,255,255,0.05);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .icon-btn:hover { background: rgba(255,255,255,0.15); }
+    .icon-btn svg { width: 28px; height: 28px; stroke: white; fill: none; }
+
+    /* =============================================
+       PRODUIT — bague centrale
+    ============================================= */
+    .product-ring {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 254px;
+      width: 456.5px;
+      height: 548.4px;
+      overflow: hidden;
+    }
+    .product-ring img {
+      position: absolute;
+      width: 289.42%;
+      height: 160.62%;
+      left: -96.11%;
+      top: -28.37%;
+      max-width: none;
+    }
+
+    /* =============================================
+       PANNEAU DROIT — profil utilisateur
+    ============================================= */
+    .right-panel {
+      position: absolute;
+      right: 80px;
+      top: 160px;
+      width: 417.5px;
+      height: 700px;
+    }
+    .right-panel .oval-card {
+      position: absolute;
+      left: 14.64px;
+      top: 27.49px;
+      width: 388px;
+      height: 672.5px;
+      border-radius: 320px;
+      backdrop-filter: blur(52.65px);
+      -webkit-backdrop-filter: blur(52.65px);
+      background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(255,255,255,0.1) 100%);
+      border: 1px solid rgba(255,255,255,0.0);
+      box-shadow:
+        inset 0 -1px 0 rgba(255,255,255,0.5),
+        inset 0 1px 0 rgba(255,255,255,0.5),
+        inset 0 0 40px rgba(0,0,0,0.24);
+    }
+    .right-panel .profile-photo {
+      position: absolute;
+      left: 33px;
+      top: 20px;
+      width: 352px;
+      height: 400px;
+      object-fit: cover;
+      object-position: top center;
+      border-radius: 300px;
+    }
+    .right-panel .glow-overlay {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 417.5px;
+      height: 432.8px;
+      mix-blend-mode: screen;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .right-panel .glow-overlay img {
+      position: absolute;
+      width: 168.74%;
+      height: 108.5%;
+      left: -34.07%;
+      top: -3.61%;
+      max-width: none;
+    }
+    .right-panel .stats-row {
+      position: absolute;
+      bottom: 220px;
+      left: 63px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+    .stat-block { display: flex; flex-direction: column; gap: 6px; color: white; }
+    .stat-label {
+      font-family: 'Urbanist', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: white;
+      line-height: 1.2;
+    }
+    .stat-value {
+      font-family: 'Urbanist', sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: white;
+      line-height: 1.2;
+    }
+    .stat-unit {
+      font-size: 14px;
+      font-weight: 400;
+      color: #dde0e2;
+    }
+    .stat-divider {
+      width: 2px;
+      height: 32px;
+      background: #e8edff;
+      border-radius: 4px;
+    }
+    .progress-circle-container {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 295.5px;
+      height: 295.5px;
+    }
+    .progress-circle-container img {
+      width: 100%;
+      height: 100%;
+      transform: scaleY(-1);
+    }
+    .weight-text {
+      position: absolute;
+      bottom: 90px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      color: white;
+    }
+    .weight-text .weight-val {
+      font-size: 22px;
+      font-weight: 700;
+      font-family: 'Urbanist', sans-serif;
+    }
+    .weight-text .weight-label {
+      font-size: 14px;
+      font-weight: 500;
+      font-family: 'Urbanist', sans-serif;
+      opacity: 0.85;
+    }
+
+    /* =============================================
+       JOURNAL CARD (top-left)
+    ============================================= */
+    .journal-card {
+      position: absolute;
+      left: 198px;
+      top: 291px;
+      width: 386px;
+      border-radius: 22px;
+      padding: 12px;
+      overflow: hidden;
+    }
+    .journal-card .journal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 21px;
+    }
+    .journal-card .journal-date {
+      font-family: 'Urbanist', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: #f0f0f0;
+      line-height: 20px;
+      letter-spacing: -0.1px;
+    }
+    .journal-card .journal-icon {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+    .journal-card .journal-icon svg { width: 20px; height: 20px; stroke: #f0f0f0; fill: none; }
+    .journal-card .journal-title {
+      font-family: 'Urbanist', sans-serif;
+      font-size: 23.5px;
+      font-weight: 400;
+      background: linear-gradient(90deg, #fff 0%, #999 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 30px;
+      letter-spacing: -0.3px;
+      margin-bottom: 21px;
+    }
+    .journal-card .journal-btns {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .journal-btn {
+      height: 32px;
+      border-radius: 100px;
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: white;
+      font-family: 'Urbanist', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 14px;
+      transition: background 0.2s;
+      letter-spacing: -0.1px;
+    }
+    .journal-btn:hover { background: rgba(255,255,255,0.3); }
+    .journal-btn svg { width: 14px; height: 14px; stroke: white; fill: none; }
+
+    /* =============================================
+       ACTIVITÉ RUNNING (middle-left)
+    ============================================= */
+    .activity-card {
+      position: absolute;
+      left: 195px;
+      top: 470px;
+      width: 386px;
+      height: 170px;
+      border-radius: 30px;
+    }
+    .activity-inner {
+      position: absolute;
+      left: 18px;
+      top: 12px;
+      width: 140px;
+    }
+    .activity-title-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 18px;
+    }
+    .activity-title-row svg { width: 35px; height: 35px; stroke: white; fill: none; }
+    .activity-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: white;
+    }
+    .activity-label {
+      font-size: 12px;
+      font-weight: 400;
+      color: #f0f0f0;
+      margin-bottom: 4px;
+    }
+    .activity-km {
+      font-size: 22px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 8px;
+    }
+    .activity-time {
+      font-size: 12px;
+      font-weight: 400;
+      color: #f0f0f0;
+    }
+    .activity-map {
+      position: absolute;
+      right: 10px;
+      top: 14px;
+      width: 173px;
+      height: 142px;
+      overflow: visible;
+    }
+    .activity-map img { width: 100%; height: 100%; object-fit: contain; }
+
+    /* =============================================
+       CALORIES CARD
+    ============================================= */
+    .calories-card {
+      position: absolute;
+      left: 195px;
+      top: 656px;
+      width: 182px;
+      height: 135px;
+      border-radius: 30px;
+      padding: 14px 23px;
+    }
+    .calories-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+    .calories-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: white;
+    }
+    .calories-icon svg { width: 36px; height: 36px; stroke: white; fill: none; }
+    .calories-value {
+      margin-top: 12px;
+      font-size: 24px;
+      font-weight: 600;
+      color: white;
+    }
+    .calories-value span {
+      font-size: 16px;
+      font-weight: 400;
+      color: #f0f0f0;
+    }
+
+    /* =============================================
+       HEART RATE CARD
+    ============================================= */
+    .heart-card {
+      position: absolute;
+      left: 393px;
+      top: 656px;
+      width: 182px;
+      height: 135px;
+      border-radius: 30px;
+    }
+    .heart-card-inner {
+      position: relative;
+      width: 182px;
+      height: 135px;
+    }
+    .heart-title {
+      position: absolute;
+      left: 14px;
+      top: 25px;
+      font-size: 20px;
+      font-weight: 600;
+      color: white;
+    }
+    .heart-icon {
+      position: absolute;
+      right: 14px;
+      top: 19px;
+      width: 36px;
+      height: 36px;
+    }
+    .heart-icon svg { width: 100%; height: 100%; stroke: white; fill: none; }
+    .heart-bpm {
+      position: absolute;
+      left: 22px;
+      top: 68px;
+      font-size: 18px;
+      font-weight: 600;
+      color: white;
+    }
+    .heart-unit {
+      position: absolute;
+      left: 14px;
+      top: 92px;
+      font-size: 17px;
+      font-weight: 400;
+      color: #f0f0f0;
+    }
+    .heart-graph {
+      position: absolute;
+      right: 10px;
+      top: 65px;
+      width: 106px;
+      height: 36.5px;
+    }
+    .heart-graph svg { width: 100%; height: 100%; stroke: rgba(255,255,255,0.6); fill: none; }
+
+    /* =============================================
+       BARRE LATÉRALE GAUCHE
+    ============================================= */
+    .left-sidebar {
+      position: absolute;
+      left: 40px;
+      top: 473.8px;
+      width: 67px;
+      height: 132px;
+    }
+    .sidebar-pill {
+      position: absolute;
+      inset: 0;
+      border-radius: 60px;
+      transform: rotate(90deg);
+      transform-origin: center center;
+    }
+    .sidebar-icons {
+      position: absolute;
+      left: 44px;
+      top: 478px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .sidebar-icon-btn {
+      width: 59px;
+      height: 59px;
+      border-radius: 29px;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(52.65px);
+      border: 1px solid rgba(255,255,255,0.0);
+      box-shadow: 1px 13px 19.8px rgba(0,0,0,0.03);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .sidebar-icon-btn:hover { background: rgba(255,255,255,0.12); }
+    .sidebar-icon-btn svg { width: 27px; height: 27px; stroke: white; fill: none; }
+
+    /* =============================================
+       BARRE DE NAVIGATION DU BAS
+    ============================================= */
+    .nav-schedule {
+      position: absolute;
+      left: 40px;
+      top: 951.4px;
+      width: 153px;
+      height: 75px;
+      border-radius: 60px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 7px 5px;
+    }
+    .schedule-icon {
+      width: 59px;
+      height: 59px;
+      border-radius: 29px;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(52.65px);
+      border: 1px solid rgba(255,255,255,0.0);
+      box-shadow: 1px 13px 19.8px rgba(0,0,0,0.03);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .schedule-icon svg { width: 24px; height: 24px; stroke: white; fill: none; }
+    .schedule-label {
+      font-size: 12px;
+      font-weight: 400;
+      color: white;
+      white-space: nowrap;
+    }
+
+    .nav-bottom-icons {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 951.4px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .bottom-icon-btn {
+      width: 82.5px;
+      height: 75px;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .bottom-icon-btn svg { width: 24px; height: 24px; stroke: white; fill: none; }
+
+    .center-btn-wrapper {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 927px;
+      width: 123px;
+      height: 123px;
+    }
+    .center-btn-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #000000 0%, #FFFFFF 100%);
+      border-radius: 50%;
+      box-shadow:
+        0 0 86px rgba(255, 255, 255, 0.4),
+        0 0 15px rgba(0, 0, 0, 0.2);
+    }
+    .center-btn {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .center-btn svg { width: 37px; height: 37px; stroke: white; fill: none; }
+
+    .nav-tabs-right {
+      position: absolute;
+      right: 80px;
+      top: 955px;
+      border-radius: 60px;
+      padding: 5px;
+    }
+    .nav-tabs-inner {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .tab-btn {
+      height: 56px;
+      padding: 18px 20px;
+      border-radius: 60px;
+      font-family: 'Urbanist', sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      color: white;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+    .tab-btn.active {
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(52.65px);
+    }
+    .tab-btn:hover:not(.active) { background: rgba(255,255,255,0.1); }
+
+    .clickable { cursor: pointer; }
+    .clickable:active { opacity: 0.75; transform: scale(0.97); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .journal-card  { animation: fadeUp 0.6s ease 0.1s both; }
+    .activity-card { animation: fadeUp 0.6s ease 0.2s both; }
+    .calories-card { animation: fadeUp 0.6s ease 0.3s both; }
+    .heart-card    { animation: fadeUp 0.6s ease 0.35s both; }
+    .right-panel   { animation: fadeUp 0.6s ease 0.15s both; }
+  </style>
 </head>
 <body>
-    <!--
-    STRUCTURE PRINCIPALE
-    ====================
-    On utilise CSS Grid pour diviser la page en zones :
-    - Header (navigation du haut)
-    - Main (contenu principal avec 3 colonnes)
-    - Footer (navigation du bas)
-    -->
-    <div class="dashboard">
 
-        <!-- ========== HEADER ========== -->
-        <header class="header">
-            <!-- Logo à gauche -->
-            <div class="logo">
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-                    <!-- Forme du logo (simplifié) -->
-                    <path d="M10 20C10 14 14 10 20 10C26 10 30 14 30 20C30 26 26 30 20 30"
-                          stroke="white" stroke-width="3" stroke-linecap="round"/>
-                    <circle cx="20" cy="20" r="4" fill="white"/>
-                </svg>
-            </div>
+<div id="app">
+  <div class="frame">
 
-            <!-- Navigation centrale -->
-            <nav class="nav-main">
-                <!-- Le slider = l'élément qui "glisse" derrière l'onglet actif -->
-                <div class="nav-slider"></div>
-                <a href="#" class="nav-link active">Overview</a>
-                <a href="#" class="nav-link">Apps</a>
-                <a href="#" class="nav-link">Store</a>
-            </nav>
-
-            <!-- Icônes à droite - dans une pilule commune comme la maquette -->
-            <div class="header-actions">
-                <button class="icon-btn">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="3"/>
-                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
-                    </svg>
-                </button>
-                <div class="icon-divider"></div>
-                <button class="icon-btn">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"/>
-                        <line x1="2" y1="12" x2="22" y2="12"/>
-                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-                    </svg>
-                </button>
-            </div>
-        </header>
-
-        <!-- ========== CONTENU PRINCIPAL ========== -->
-        <main class="main-content">
-
-            <!-- COLONNE GAUCHE : Sidebar + Cartes -->
-            <aside class="left-panel">
-
-                <!-- Mini sidebar avec icônes -->
-                <div class="sidebar-icons">
-                    <button class="sidebar-btn">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                            <line x1="16" y1="2" x2="16" y2="6"/>
-                            <line x1="8" y1="2" x2="8" y2="6"/>
-                            <line x1="3" y1="10" x2="21" y2="10"/>
-                        </svg>
-                    </button>
-                    <button class="sidebar-btn">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <line x1="18" y1="20" x2="18" y2="10"/>
-                            <line x1="12" y1="20" x2="12" y2="4"/>
-                            <line x1="6" y1="20" x2="6" y2="14"/>
-                        </svg>
-                    </button>
-                </div>
-
-                <!-- Cartes de données -->
-                <div class="cards-container">
-
-                    <!-- Carte Journal -->
-                    <div class="card card-journal">
-                        <div class="card-header">
-                            <span class="date">Monday, Jun 7</span>
-                            <span class="weather-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun-icon lucide-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></span>
-                        </div>
-                        <h3 class="card-question">How will you make tomorrow meaningful?</h3>
-                        <div class="card-actions">
-                            <button class="btn btn-primary">
-                                <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-notebook-pen-icon lucide-notebook-pen"><path d="M13.4 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7.4"/><path d="M2 6h4"/><path d="M2 10h4"/><path d="M2 14h4"/><path d="M2 18h4"/><path d="M21.378 5.626a1 1 0 1 0-3.004-3.004l-5.01 5.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/></svg></span> New Entry
-                            </button>
-                            <button class="btn btn-secondary">
-                                <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rotate-ccw-icon lucide-rotate-ccw"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></span> Try again
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Carte Running -->
-                    <div class="card card-running">
-                        <div class="card-header">
-                            <span class="activity-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-activity-icon lucide-activity"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg></span>
-                            <span class="activity-name">Running</span>
-                        </div>
-                        <div class="card-body">
-                            <div class="activity-stats">
-                                <span class="label">Last Activity</span>
-                                <span class="value">3.5 <small>Km</small></span>
-                                <span class="update">Last update 2min ago</span>
-                            </div>
-                            <div class="mini-map">
-                                <!-- Représentation simplifiée de la carte -->
-                                <img src="assets/map-running.png" alt="Running map" class="map-img">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Cartes Calories et Heart Rate (côte à côte) -->
-                    <div class="cards-row">
-                        <div class="card card-calories">
-                            <div class="card-header">
-                                <span>Calories</span>
-                                <span class="trend-up"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-flame-icon lucide-flame"><path d="M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4"/></svg></span>
-                            </div>
-                            <span class="value">2,054 <small>Kcal</small></span>
-                        </div>
-
-                        <div class="card card-heart">
-                            <div class="card-header">
-                                <span>Heart Rate</span>
-                                <span class="heart-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart-pulse-icon lucide-heart-pulse"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/><path d="M3.22 13H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/></svg></span>
-                            </div>
-                            <span class="value">94 <small>bpm</small></span>
-                            <svg class="heart-graph" viewBox="0 0 100 50" preserveAspectRatio="none">
-                                <path d="M0 45 Q15 40 20 35 Q30 25 40 30 Q50 35 55 25 Q65 10 75 20 Q85 30 90 15 Q95 5 100 10"
-                                      stroke="rgba(255,255,255,0.5)" stroke-width="2" fill="none" stroke-linecap="round"/>
-                            </svg>
-                        </div>
-                    </div>
-
-                </div>
-            </aside>
-
-            <!-- COLONNE CENTRALE : Ring 3D -->
-            <section class="center-panel">
-                <div class="ring-container">
-                    <!-- L'image de la ring sera ajoutée en CSS ou via img -->
-                    <div class="ring-glow"></div>
-
-                    <!-- Image de la Ring -->
-                    <img src="assets/ring.png" alt="Smart Ring" class="ring-image">
-
-                </div>
-            </section>
-
-            <!-- COLONNE DROITE : Profil et Stats -->
-            <aside class="right-panel">
-
-                <!-- Carte Profil -->
-                <div class="card card-profile">
-                    <div class="profile-image-container">
-                        <div class="profile-glow"></div>
-                        <img src="assets/profile.jpg" alt="User Profile" class="profile-image">
-                    </div>
-
-                    <div class="profile-stats">
-                        <div class="stat">
-                            <span class="stat-value">8.5 <small>kg</small></span>
-                            <span class="stat-label">Weight Loss</span>
-                        </div>
-                        <div class="stat">
-                            <span class="stat-value">6.4K <small>kcl</small></span>
-                            <span class="stat-label">Calories Loss</span>
-                        </div>
-                        <div class="stat">
-                            <span class="stat-value">3 <small>chat</small></span>
-                            <span class="stat-label">Challenges</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Carte Poids -->
-                <div class="card card-weight">
-                    <div class="weight-display">
-                        <span class="weight-value">76.5<small>kg</small></span>
-                        <span class="weight-label">Current Weight</span>
-                    </div>
-                    <div class="weight-chart">
-                        <!-- Graphique semi-circulaire -->
-                        <svg viewBox="0 0 120 60" class="gauge-svg">
-                            <path d="M10 55 A50 50 0 0 1 110 55" stroke="rgba(255,255,255,0.2)" stroke-width="8" fill="none" stroke-linecap="round"/>
-                            <path d="M10 55 A50 50 0 0 1 85 15" stroke="white" stroke-width="8" fill="none" stroke-linecap="round"/>
-                        </svg>
-                    </div>
-                </div>
-
-            </aside>
-
-        </main>
-
-        <!-- ========== FOOTER ========== -->
-        <footer class="footer">
-
-            <!-- Bouton Schedule à gauche -->
-            <button class="btn-schedule">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <rect x="3" y="4" width="18" height="18" rx="2"/>
-                    <line x1="16" y1="2" x2="16" y2="6"/>
-                    <line x1="8" y1="2" x2="8" y2="6"/>
-                    <line x1="3" y1="10" x2="21" y2="10"/>
-                </svg>
-                Schedule
-            </button>
-
-            <!-- Navigation centrale -->
-            <nav class="nav-footer">
-                <button class="nav-footer-btn">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                        <circle cx="12" cy="7" r="4"/>
-                    </svg>
-                </button>
-                <button class="nav-footer-btn">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                        <polyline points="22,6 12,13 2,6"/>
-                    </svg>
-                </button>
-                <button class="nav-footer-btn active">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="3" y="3" width="7" height="7"/>
-                        <rect x="14" y="3" width="7" height="7"/>
-                        <rect x="14" y="14" width="7" height="7"/>
-                        <rect x="3" y="14" width="7" height="7"/>
-                    </svg>
-                </button>
-                <button class="nav-footer-btn">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M5 12.55a11 11 0 0 1 14.08 0"/>
-                        <path d="M1.42 9a16 16 0 0 1 21.16 0"/>
-                        <path d="M8.53 16.11a6 6 0 0 1 6.95 0"/>
-                        <circle cx="12" cy="20" r="1"/>
-                    </svg>
-                </button>
-                <button class="nav-footer-btn">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M18.36 6.64a9 9 0 1 1-12.73 0"/>
-                        <line x1="12" y1="2" x2="12" y2="12"/>
-                    </svg>
-                </button>
-            </nav>
-
-            <!-- Tabs à droite -->
-            <div class="footer-tabs">
-                <div class="tab-slider"></div>
-                <button class="tab active">Journey</button>
-                <button class="tab">Stats</button>
-                <button class="tab">Duels</button>
-            </div>
-
-        </footer>
-
+    <!-- ARRIÈRE-PLAN -->
+    <div class="bg">
+      <img src="assets/clouds-bg.png" alt="" />
     </div>
 
-    <script src="script.js"></script>
+    <!-- LOGO -->
+    <div class="logo">
+      <svg viewBox="0 0 56 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 20C10 14 16 8 28 8C40 8 46 14 46 20C46 26 40 32 28 32" stroke="white" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="28" cy="20" r="6" fill="white"/>
+      </svg>
+    </div>
+
+    <!-- NAVIGATION CENTRALE -->
+    <div class="nav-center">
+      <div class="glass-sm"></div>
+      <div class="nav-items">
+        <button class="nav-btn active" onclick="setNav(this)">Overview</button>
+        <button class="nav-btn" onclick="setNav(this)">Apps</button>
+        <button class="nav-btn" onclick="setNav(this)">Store</button>
+      </div>
+    </div>
+
+    <!-- BOUTONS TOP-RIGHT -->
+    <div class="top-right-btns">
+      <div class="glass-sm"></div>
+      <div class="btn-group">
+        <button class="icon-btn">
+          <svg viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        </button>
+        <button class="icon-btn">
+          <svg viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- BAGUE CENTRALE -->
+    <div class="product-ring">
+      <img src="assets/ring.png" alt="Lunarix One Smart Ring" />
+    </div>
+
+    <!-- PANNEAU DROIT (profil) -->
+    <div class="right-panel">
+      <div class="oval-card"></div>
+      <img class="profile-photo" src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&h=500&fit=crop&crop=face" alt="Profile" />
+      <div class="stats-row">
+        <div class="stat-block">
+          <div class="stat-label">Weight Loss</div>
+          <div class="stat-value">8.5 <span class="stat-unit">kg</span></div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-block">
+          <div class="stat-label">Calories Loss</div>
+          <div class="stat-value">6.4K <span class="stat-unit">kcl</span></div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-block">
+          <div class="stat-label">Challenges</div>
+          <div class="stat-value">3 <span class="stat-unit">chal</span></div>
+        </div>
+      </div>
+      <div class="weight-text">
+        <div class="weight-val">76.5kg</div>
+        <div class="weight-label">Current Weight</div>
+      </div>
+    </div>
+
+    <!-- JOURNAL CARD -->
+    <div class="journal-card glass">
+      <div class="journal-header">
+        <span class="journal-date">Monday, Jun 7</span>
+        <div class="journal-icon">
+          <svg viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        </div>
+      </div>
+      <p class="journal-title">How will you make tomorrow meaningful?</p>
+      <div class="journal-btns">
+        <button class="journal-btn">
+          <svg viewBox="0 0 24 24" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+          New Entry
+        </button>
+        <button class="journal-btn">
+          <svg viewBox="0 0 24 24" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+          Try again
+        </button>
+      </div>
+    </div>
+
+    <!-- RUNNING CARD -->
+    <div class="activity-card glass">
+      <div class="activity-inner">
+        <div class="activity-title-row">
+          <svg viewBox="0 0 24 24" stroke-width="2"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg>
+          <span class="activity-title">Running</span>
+        </div>
+        <div class="activity-label">Last Activity</div>
+        <div class="activity-km">3.5 Km</div>
+        <div class="activity-time">Last update 2min ago</div>
+      </div>
+      <div class="activity-map">
+        <img src="assets/map-running.png" alt="Running Map" />
+      </div>
+    </div>
+
+    <!-- CALORIES CARD -->
+    <div class="calories-card glass">
+      <div class="calories-header">
+        <span class="calories-title">Calories</span>
+        <div class="calories-icon">
+          <svg viewBox="0 0 24 24" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+        </div>
+      </div>
+      <div class="calories-value">2,054 <span>Kcal</span></div>
+    </div>
+
+    <!-- HEART RATE CARD -->
+    <div style="position:absolute;left:393px;top:656px;">
+      <div class="heart-card-inner glass" style="border-radius:30px;">
+        <span class="heart-title">Heart Rate</span>
+        <div class="heart-icon">
+          <svg viewBox="0 0 24 24" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+        </div>
+        <span class="heart-bpm">94</span>
+        <span class="heart-unit">bpm</span>
+        <div class="heart-graph">
+          <svg viewBox="0 0 106 37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 20 Q15 18 20 15 Q30 10 40 12 Q50 14 55 8 Q65 2 75 10 Q85 18 90 5 Q95 2 104 6"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIDEBAR GAUCHE -->
+    <div class="left-sidebar">
+      <div class="sidebar-pill glass-sm" style="width:132px;height:67px;top:50%;left:50%;transform:translate(-50%,-50%) rotate(90deg);"></div>
+    </div>
+    <div class="sidebar-icons">
+      <button class="sidebar-icon-btn">
+        <svg viewBox="0 0 24 24" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      </button>
+      <button class="sidebar-icon-btn">
+        <svg viewBox="0 0 24 24" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      </button>
+    </div>
+
+    <!-- NAV BAS GAUCHE (Schedule) -->
+    <div class="nav-schedule glass">
+      <div class="schedule-icon">
+        <svg viewBox="0 0 24 24" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      </div>
+      <span class="schedule-label">Schedule</span>
+    </div>
+
+    <!-- ICÔNES BAS-CENTRE -->
+    <div class="nav-bottom-icons">
+      <div class="bottom-icon-btn glass-sm clickable">
+        <svg viewBox="0 0 24 24" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </div>
+      <div class="bottom-icon-btn glass-sm clickable">
+        <svg viewBox="0 0 24 24" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      </div>
+      <div style="width:123px;height:75px;"></div>
+      <div class="bottom-icon-btn glass-sm clickable">
+        <svg viewBox="0 0 24 24" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><circle cx="12" cy="20" r="1"/></svg>
+      </div>
+      <div class="bottom-icon-btn glass-sm clickable">
+        <svg viewBox="0 0 24 24" stroke-width="2"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"/><line x1="12" y1="2" x2="12" y2="12"/></svg>
+      </div>
+    </div>
+
+    <!-- Bouton central doré -->
+    <div class="center-btn-wrapper">
+      <div class="center-btn-bg"></div>
+      <div class="center-btn clickable">
+        <svg viewBox="0 0 24 24" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      </div>
+    </div>
+
+    <!-- TABS BAS-DROITE -->
+    <div class="nav-tabs-right glass">
+      <div class="nav-tabs-inner">
+        <button class="tab-btn active" onclick="setTab(this)">Journey</button>
+        <button class="tab-btn" onclick="setTab(this)">Stats</button>
+        <button class="tab-btn" onclick="setTab(this)">Duels</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function scaleApp() {
+    const app = document.getElementById('app');
+    const scaleX = window.innerWidth / 1920;
+    const scaleY = window.innerHeight / 1080;
+    const scale = Math.min(scaleX, scaleY);
+    app.style.transform = `scale(${scale})`;
+    const offsetX = (window.innerWidth - 1920 * scale) / 2;
+    const offsetY = (window.innerHeight - 1080 * scale) / 2;
+    app.style.left = offsetX + 'px';
+    app.style.top = offsetY + 'px';
+  }
+  scaleApp();
+  window.addEventListener('resize', scaleApp);
+
+  function setNav(btn) {
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  function setTab(btn) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  const bpmEl = document.querySelector('.heart-bpm');
+  let bpm = 94;
+  setInterval(() => {
+    bpm = 88 + Math.floor(Math.random() * 14);
+    bpmEl.textContent = bpm;
+  }, 2000);
+</script>
+
 </body>
 </html>

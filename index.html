@@ -899,7 +899,7 @@
     const app = document.getElementById('app');
     const scaleX = window.innerWidth / 1920;
     const scaleY = window.innerHeight / 1080;
-    const scale = Math.min(scaleX, scaleY);
+    const scale = Math.max(scaleX, scaleY);
     app.style.transform = `scale(${scale})`;
     const offsetX = (window.innerWidth - 1920 * scale) / 2;
     const offsetY = (window.innerHeight - 1080 * scale) / 2;

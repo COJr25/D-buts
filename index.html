@@ -10,7 +10,7 @@
        RESET & BASE
     ============================================= */
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { width: 100%; height: 100%; overflow: hidden; background: transparent; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
 
     /* =============================================
        WRAPPER — le design est conçu en 1920×1080.
@@ -18,10 +18,11 @@
        gardant les proportions exactes de Figma.
     ============================================= */
     #app {
-      position: relative;
+      position: absolute;
       top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
+      width: 1920px;
+      height: 1080px;
+      transform-origin: top left;
     }
 
     /* =============================================
@@ -219,12 +220,20 @@
     .right-panel .profile-photo {
       position: absolute;
       left: 33px;
-      top: 20px;
+      top: 50px;
       width: 352px;
       height: 350px;
       object-fit: cover;
       object-position: top center;
       border-radius: 400px;
+    }
+    .right-panel .ring-runner {
+      position: absolute;
+      left: 9px;
+      top: -4px;
+      width: 400px;
+      height: 400px;
+      pointer-events: none;
     }
     .right-panel .glow-overlay {
       position: absolute;
@@ -901,9 +910,9 @@
     const scaleX = window.innerWidth / 1920;
     const scaleY = window.innerHeight / 1080;
     const scale = Math.max(scaleX, scaleY);
-    app.style.transform = `scale(${scale})`;
     const offsetX = (window.innerWidth - 1920 * scale) / 2;
     const offsetY = (window.innerHeight - 1080 * scale) / 2;
+    app.style.transform = `scale(${scale})`;
     app.style.left = offsetX + 'px';
     app.style.top = offsetY + 'px';
   }

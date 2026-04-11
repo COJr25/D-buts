@@ -301,18 +301,13 @@
       background: #e8edff;
       border-radius: 4px;
     }
-    .progress-circle-container {
+    .weight-arc {
       position: absolute;
-      bottom: 30px;
+      bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
-      width: 295.5px;
-      height: 295.5px;
-    }
-    .progress-circle-container img {
-      width: 100%;
-      height: 100%;
-      transform: scaleY(-1);
+      width: 295px;
+      height: 295px;
     }
     .weight-text {
       position: absolute;
@@ -321,6 +316,7 @@
       transform: translateX(-50%);
       text-align: center;
       color: white;
+      white-space: nowrap;
     }
     .weight-text .weight-val {
       font-size: 22px;
@@ -791,6 +787,30 @@
           <div class="stat-value">3 <span class="stat-unit">chal</span></div>
         </div>
       </div>
+      <svg class="weight-arc" viewBox="0 0 295 295" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g transform="translate(147.5,147.5)" stroke="white" stroke-linecap="round" stroke-width="3.5">
+          <g transform="rotate(0)">  <line x1="112" y1="0" x2="127" y2="0" opacity="0.50"/></g>
+          <g transform="rotate(9.5)"><line x1="112" y1="0" x2="127" y2="0" opacity="0.57"/></g>
+          <g transform="rotate(18.9)"><line x1="112" y1="0" x2="127" y2="0" opacity="0.63"/></g>
+          <g transform="rotate(28.4)"><line x1="112" y1="0" x2="127" y2="0" opacity="0.69"/></g>
+          <g transform="rotate(37.9)"><line x1="112" y1="0" x2="127" y2="0" opacity="0.75"/></g>
+          <g transform="rotate(47.4)"><line x1="112" y1="0" x2="127" y2="0" opacity="0.79"/></g>
+          <g transform="rotate(56.8)"><line x1="112" y1="0" x2="127" y2="0" opacity="0.84"/></g>
+          <g transform="rotate(66.3)"><line x1="112" y1="0" x2="127" y2="0" opacity="0.87"/></g>
+          <g transform="rotate(75.8)"><line x1="112" y1="0" x2="127" y2="0" opacity="0.89"/></g>
+          <g transform="rotate(85.3)"><line x1="112" y1="0" x2="127" y2="0" opacity="0.90"/></g>
+          <g transform="rotate(94.7)"><line x1="112" y1="0" x2="127" y2="0" opacity="0.90"/></g>
+          <g transform="rotate(104.2)"><line x1="112" y1="0" x2="127" y2="0" opacity="0.89"/></g>
+          <g transform="rotate(113.7)"><line x1="112" y1="0" x2="127" y2="0" opacity="0.87"/></g>
+          <g transform="rotate(123.2)"><line x1="112" y1="0" x2="127" y2="0" opacity="0.84"/></g>
+          <g transform="rotate(132.6)"><line x1="112" y1="0" x2="127" y2="0" opacity="0.79"/></g>
+          <g transform="rotate(142.1)"><line x1="112" y1="0" x2="127" y2="0" opacity="0.75"/></g>
+          <g transform="rotate(151.6)"><line x1="112" y1="0" x2="127" y2="0" opacity="0.69"/></g>
+          <g transform="rotate(161.1)"><line x1="112" y1="0" x2="127" y2="0" opacity="0.63"/></g>
+          <g transform="rotate(170.5)"><line x1="112" y1="0" x2="127" y2="0" opacity="0.57"/></g>
+          <g transform="rotate(180)"><line x1="112" y1="0" x2="127" y2="0" opacity="0.50"/></g>
+        </g>
+      </svg>
       <div class="weight-text">
         <div class="weight-val">76.5kg</div>
         <div class="weight-label">Current Weight</div>

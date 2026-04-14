@@ -114,6 +114,23 @@
       gap: 12px;
       padding: 5.5px;
     }
+    .nav-slider {
+      position: absolute;
+      height: 56px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-radius: 60px;
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(52.65px);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.6),
+                  inset -1px 0 0 rgba(255,255,255,0.4),
+                  inset 0 -1px 0 rgba(255,255,255,0.08),
+                  inset 1px 0 0 rgba(255,255,255,0.08);
+      transition: left 0.35s cubic-bezier(0.25, 0.1, 0.25, 1),
+                  width 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
+      pointer-events: none;
+      z-index: 0;
+    }
     .nav-btn {
       height: 56px;
       padding: 14px 16px;
@@ -127,18 +144,11 @@
       background: transparent;
       border: none;
       transition: background 0.2s;
+      position: relative;
+      z-index: 1;
     }
-    .nav-btn.active {
-      background: rgba(255,255,255,0.2);
-      backdrop-filter: blur(52.65px);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.6),
-                  inset -1px 0 0 rgba(255,255,255,0.4),
-                  inset 0 -1px 0 rgba(255,255,255,0.08),
-                  inset 1px 0 0 rgba(255,255,255,0.08);
-    }
-    .nav-btn:hover:not(.active) {
-      background: rgba(255,255,255,0.1);
-    }
+    .nav-btn.active { background: transparent; }
+    .nav-btn:hover:not(.active) { background: rgba(255,255,255,0.1); }
 
     /* =============================================
        BOUTONS TOP-RIGHT (paramètres + globe)
@@ -682,9 +692,27 @@
       padding: 5px;
     }
     .nav-tabs-inner {
+      position: relative;
       display: flex;
       align-items: center;
       gap: 12px;
+    }
+    .tab-slider {
+      position: absolute;
+      height: 56px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-radius: 60px;
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(52.65px);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.6),
+                  inset -1px 0 0 rgba(255,255,255,0.4),
+                  inset 0 -1px 0 rgba(255,255,255,0.08),
+                  inset 1px 0 0 rgba(255,255,255,0.08);
+      transition: left 0.35s cubic-bezier(0.25, 0.1, 0.25, 1),
+                  width 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
+      pointer-events: none;
+      z-index: 0;
     }
     .tab-btn {
       height: 56px;
@@ -699,11 +727,10 @@
       cursor: pointer;
       white-space: nowrap;
       transition: background 0.2s;
+      position: relative;
+      z-index: 1;
     }
-    .tab-btn.active {
-      background: rgba(255,255,255,0.2);
-      backdrop-filter: blur(52.65px);
-    }
+    .tab-btn.active { background: transparent; }
     .tab-btn:hover:not(.active) { background: rgba(255,255,255,0.1); }
 
     .clickable { cursor: pointer; }
@@ -742,6 +769,7 @@
     <div class="nav-center">
       <div class="glass-sm"></div>
       <div class="nav-items">
+        <div class="nav-slider"></div>
         <button class="nav-btn active" onclick="setNav(this)">Overview</button>
         <button class="nav-btn" onclick="setNav(this)">Apps</button>
         <button class="nav-btn" onclick="setNav(this)">Store</button>
@@ -931,6 +959,7 @@
     <!-- TABS BAS-DROITE -->
     <div class="nav-tabs-right glass">
       <div class="nav-tabs-inner">
+        <div class="tab-slider"></div>
         <button class="tab-btn active" onclick="setTab(this)">Journey</button>
         <button class="tab-btn" onclick="setTab(this)">Stats</button>
         <button class="tab-btn" onclick="setTab(this)">Duels</button>
@@ -955,13 +984,33 @@
   scaleApp();
   window.addEventListener('resize', scaleApp);
 
+  const navSlider = document.querySelector('.nav-slider');
+  const tabSlider = document.querySelector('.tab-slider');
+
+  function moveSlider(slider, activeBtn) {
+    slider.style.left = activeBtn.offsetLeft + 'px';
+    slider.style.width = activeBtn.offsetWidth + 'px';
+  }
+
+  // Positionner sans animation au chargement
+  navSlider.style.transition = 'none';
+  tabSlider.style.transition = 'none';
+  moveSlider(navSlider, document.querySelector('.nav-btn.active'));
+  moveSlider(tabSlider, document.querySelector('.tab-btn.active'));
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    navSlider.style.removeProperty('transition');
+    tabSlider.style.removeProperty('transition');
+  }));
+
   function setNav(btn) {
     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
+    moveSlider(navSlider, btn);
   }
   function setTab(btn) {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
+    moveSlider(tabSlider, btn);
   }
 
   const bpmEl = document.querySelector('.heart-bpm');

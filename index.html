@@ -1014,11 +1014,33 @@
   }
 
   const bpmEl = document.querySelector('.heart-bpm');
-  let bpm = 94;
-  setInterval(() => {
-    bpm = 88 + Math.floor(Math.random() * 14);
-    bpmEl.textContent = bpm;
-  }, 2000);
+  const API_BASE_URL = window.__API_BASE_URL__ || 'http://localhost:3001';
+  const HEART_POLLING_MS = 5000;
+
+  // Lit le BPM depuis l'API puis met à jour la carte Heart.
+  async function refreshHeartBpm() {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/v1/metrics/heart/latest`);
+      if (!response.ok) {
+        throw new Error('API error');
+      }
+
+      const payload = await response.json();
+      const bpm = payload?.data?.bpm;
+
+      if (Number.isFinite(bpm)) {
+        bpmEl.textContent = Math.round(bpm);
+      }
+    } catch (error) {
+      // L'API n'est peut-être pas encore lancée en local.
+      console.warn("Impossible de récupérer le BPM depuis l'API.", error);
+    }
+  }
+
+  refreshHeartBpm();
+
+  // "fetch périodique" = on refait l'appel API régulièrement.
+  setInterval(refreshHeartBpm, HEART_POLLING_MS);
 </script>
 
 </body>
